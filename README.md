@@ -2,4 +2,4 @@
 COMP422 (Data mining) - Project 2
 
 #Requirements
-- JGAP library (jgap_3.6.3_jar)
+- JGAP library version 3.6.3 (jgap.jar, jgap-examples.jar, log4j.jar)
