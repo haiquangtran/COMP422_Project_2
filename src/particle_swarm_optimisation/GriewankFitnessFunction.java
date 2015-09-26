@@ -2,9 +2,9 @@ package particle_swarm_optimisation;
 
 import net.sourceforge.jswarm_pso.FitnessFunction;
 
-public class PSOFitnessFunction extends FitnessFunction {
+public class GriewankFitnessFunction extends FitnessFunction {
 
-	public PSOFitnessFunction() {
+	public GriewankFitnessFunction() {
 		super(false);
 	}
 

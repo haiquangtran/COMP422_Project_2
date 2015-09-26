@@ -21,7 +21,7 @@ public class ParticleSwarmOptimisation {
 		System.out.println("Example of Particle Swarm Optimization: Optimizing Rastrijin's funtion");
 
 		// Create a swarm (using 'MyParticle' as sample particle and 'MyFitnessFunction' as finess function)
-		Swarm swarm = new Swarm(Swarm.DEFAULT_NUMBER_OF_PARTICLES, new MyParticle(), new PSOFitnessFunction());
+		Swarm swarm = new Swarm(Swarm.DEFAULT_NUMBER_OF_PARTICLES, new MyParticle(), new RosenbrockFitnessFunction());
 
 		// Use neighborhood
 		Neighborhood neigh = new Neighborhood1D(Swarm.DEFAULT_NUMBER_OF_PARTICLES / 5, true);
