@@ -25,5 +25,6 @@
 	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/commons-codec-1.3.jar"/>
 	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/appframework-1.0.3.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jswarm-pso_2_08.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

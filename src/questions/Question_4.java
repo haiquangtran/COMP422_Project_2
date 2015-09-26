@@ -1,5 +1,7 @@
 package questions;
 
+import particle_swarm_optimisation.ParticleSwarmOptimisation;
+
 public class Question_4 {
 
 	/**
@@ -20,8 +22,9 @@ public class Question_4 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		ParticleSwarmOptimisation pso = new ParticleSwarmOptimisation();
 
+		pso.calculate();
 	}
 
 }
