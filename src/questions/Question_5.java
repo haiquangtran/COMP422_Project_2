@@ -1,5 +1,18 @@
 package questions;
 
+import java.awt.BorderLayout;
+import java.io.File;
+
+import weka.classifiers.Classifier;
+import weka.classifiers.evaluation.Evaluation;
+import weka.classifiers.trees.J48;
+import weka.core.Instances;
+import weka.core.converters.CSVLoader;
+import weka.gui.treevisualizer.PlaceNode2;
+import weka.gui.treevisualizer.TreeVisualizer;
+
+
+
 public class Question_5 {
 
 	/**
@@ -16,7 +29,6 @@ public class Question_5 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	}
 
