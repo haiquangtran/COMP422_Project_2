@@ -1,7 +1,7 @@
 package questions;
 
+import genetic_programming.GenerateRegressionDataset;
 import genetic_programming.SymbolicRegression;
-import genetic_programming.SymbolicRegressionProblem;
 
 import org.jgap.InvalidConfigurationException;
 import org.jgap.gp.impl.GPConfiguration;
@@ -22,9 +22,18 @@ public class Question_3 {
 	 */
 	public static void main(String[] args) {
 		try {
+			int min = -10;
+			int max = 10;
+			int numOfExamples = 1000;
+			String fileName = FileLoader.getFilePath("symbolic_dataset");
+			// Generate data set first
+			GenerateRegressionDataset dataset = new GenerateRegressionDataset(fileName, numOfExamples, min, max);
+
+			// Solve symbolic regression problem using Genetic Programming
 			GPConfiguration regressionConfig = new GPConfiguration();
-			SymbolicRegressionProblem regressionProblem = new SymbolicRegressionProblem(regressionConfig);
-			String regressionPath = FileLoader.getFilePath("xor.conf");
+			SymbolicRegression regressionProblem = new SymbolicRegression(regressionConfig);
+
+			String regressionPath = FileLoader.getFilePath("symbolic_regression.conf");
 			String[] mainArgs = {regressionPath};
 
 			try {

@@ -14,5 +14,4 @@ public class FileLoader {
 		return filePath + fileName;
 	}
 
-
 }

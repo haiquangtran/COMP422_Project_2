@@ -61,3 +61,38 @@
 [27.09.2015 05:30:12,635] [main] INFO  org.jgap.gp.impl.GPPopulation  - Prototype program set
 [27.09.2015 05:30:12,742] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free after creating population: 118.0 MB
 [27.09.2015 05:30:12,745] [main] INFO  org.jgap.gp.impl.GPGenotype  - Your configuration does not contain unused commands, this is good
+[27.09.2015 05:33:21,892] [main] INFO  org.jgap.gp.impl.GPGenotype  - Creating initial population
+[27.09.2015 05:33:21,895] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free: 118.0 MB
+[27.09.2015 05:33:21,901] [main] INFO  org.jgap.gp.impl.GPPopulation  - Prototype program set
+[27.09.2015 05:33:22,019] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free after creating population: 118.0 MB
+[27.09.2015 05:33:22,021] [main] INFO  org.jgap.gp.impl.GPGenotype  - Your configuration does not contain unused commands, this is good
+[27.09.2015 05:39:45,160] [main] INFO  org.jgap.gp.impl.GPGenotype  - Creating initial population
+[27.09.2015 05:39:45,162] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free: 118.0 MB
+[27.09.2015 05:39:45,169] [main] INFO  org.jgap.gp.impl.GPPopulation  - Prototype program set
+[27.09.2015 05:39:45,248] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free after creating population: 118.0 MB
+[27.09.2015 05:39:45,250] [main] INFO  org.jgap.gp.impl.GPGenotype  - Your configuration does not contain unused commands, this is good
+[27.09.2015 06:01:53,211] [main] INFO  org.jgap.gp.impl.GPGenotype  - Creating initial population
+[27.09.2015 06:01:53,214] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free: 118.0 MB
+[27.09.2015 06:01:53,221] [main] INFO  org.jgap.gp.impl.GPPopulation  - Prototype program set
+[27.09.2015 06:01:53,305] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free after creating population: 118.0 MB
+[27.09.2015 06:01:53,307] [main] INFO  org.jgap.gp.impl.GPGenotype  - Your configuration does not contain unused commands, this is good
+[27.09.2015 06:03:32,903] [main] INFO  org.jgap.gp.impl.GPGenotype  - Creating initial population
+[27.09.2015 06:03:32,906] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free: 118.0 MB
+[27.09.2015 06:03:32,912] [main] INFO  org.jgap.gp.impl.GPPopulation  - Prototype program set
+[27.09.2015 06:03:33,004] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free after creating population: 118.0 MB
+[27.09.2015 06:03:33,007] [main] INFO  org.jgap.gp.impl.GPGenotype  - Your configuration does not contain unused commands, this is good
+[27.09.2015 06:04:19,292] [main] INFO  org.jgap.gp.impl.GPGenotype  - Creating initial population
+[27.09.2015 06:04:19,295] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free: 118.0 MB
+[27.09.2015 06:04:19,302] [main] INFO  org.jgap.gp.impl.GPPopulation  - Prototype program set
+[27.09.2015 06:04:19,378] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free after creating population: 118.0 MB
+[27.09.2015 06:04:19,380] [main] INFO  org.jgap.gp.impl.GPGenotype  - Your configuration does not contain unused commands, this is good
+[27.09.2015 06:06:07,634] [main] INFO  org.jgap.gp.impl.GPGenotype  - Creating initial population
+[27.09.2015 06:06:07,636] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free: 118.0 MB
+[27.09.2015 06:06:07,642] [main] INFO  org.jgap.gp.impl.GPPopulation  - Prototype program set
+[27.09.2015 06:06:07,729] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free after creating population: 118.0 MB
+[27.09.2015 06:06:07,730] [main] INFO  org.jgap.gp.impl.GPGenotype  - Your configuration does not contain unused commands, this is good
+[27.09.2015 06:12:46,658] [main] INFO  org.jgap.gp.impl.GPGenotype  - Creating initial population
+[27.09.2015 06:12:46,661] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free: 118.0 MB
+[27.09.2015 06:12:46,670] [main] INFO  org.jgap.gp.impl.GPPopulation  - Prototype program set
+[27.09.2015 06:12:46,773] [main] INFO  org.jgap.gp.impl.GPGenotype  - Mem free after creating population: 118.0 MB
+[27.09.2015 06:12:46,776] [main] INFO  org.jgap.gp.impl.GPGenotype  - Your configuration does not contain unused commands, this is good
