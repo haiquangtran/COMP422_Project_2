@@ -26,7 +26,8 @@ public class DigitImage {
 		for (int i = 0; i < digits.length; i++) {
 			double current = this.digits[i];
 			double neighbour = other.digits[i];
-			total += (Math.pow(current-neighbour, 2) / Math.pow(current-neighbour, 2));
+
+			total += Math.pow(current-neighbour, 2);
 		}
 
 		return  Math.sqrt(total);
