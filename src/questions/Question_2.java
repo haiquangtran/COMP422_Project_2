@@ -35,14 +35,14 @@ public class Question_2 {
 	 * • Compare the two methods and results and draw your conclusions.
 	 */
 	public static void main(String[] args) {
-		String filePath = FileLoader.getFilePath("digits00");
+		String filePath = FileLoader.getFilePath("digits60");
 		// Load datasets
 		DatasetLoader dataLoader = new DatasetLoader(filePath);
 		ArrayList<DigitImage> trainingSet = dataLoader.getTrainingSet();
 		ArrayList<DigitImage> testSet = dataLoader.getTestSet();
 		// Classify test data using K-Nearest Neighbour Algorithm
 		KNN_Algorithm knn = new KNN_Algorithm(trainingSet, testSet);
-		knn.calculate();
+		knn.calculate(false);
 	}
 
 }

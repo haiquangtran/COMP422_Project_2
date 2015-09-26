@@ -17,7 +17,7 @@ public class KNN_Algorithm {
 		this.testSet = testSet;
 	}
 
-	public void calculate(){
+	public void calculate(boolean printIncorrectInstances){
 		// Statistics
 		int total = 0;
 		int correct = 0;
@@ -27,6 +27,7 @@ public class KNN_Algorithm {
 		int kValue = input.nextInt();
 
 		System.out.println("Calculating Classification Accuracy of K-Nearest Neighbour...");
+		System.out.println("May take a while, please wait...");
 		// Classify all data points in the test set
 		for (final DigitImage testPoint: testSet) {
 
@@ -57,7 +58,7 @@ public class KNN_Algorithm {
 			}
 
 			// Classify
-			int majorityClass = Integer.MIN_VALUE;
+			int majorityClass = -1;
 			int classification = -1;
 
 			//Classification of majority class
@@ -75,7 +76,7 @@ public class KNN_Algorithm {
 				correct++;
 			} else if (classification == -1) {
 				System.out.println("Could not classify the test point. It should be :" + testPoint.getDigitClass());
-			} else {
+			} else if (printIncorrectInstances) {
 				System.out.println("Incorrect classification: " + classification +" should be :" + testPoint.getDigitClass());
 			}
 
@@ -85,9 +86,11 @@ public class KNN_Algorithm {
 		//Accuracy percentage
 		double accuracy = (double)correct/(double)total;
 		//Print out the statistics
-		System.out.println("k value is " + kValue);
-		System.out.println("Correct " + correct + " out of " + total);
-		System.out.println("Classification Accuracy " + String.format("%.4f", accuracy*100) + " % (4 dp)");
+		System.out.println("\nK Nearest Neighbour Results:");
+		System.out.println("K value is " + kValue);
+		System.out.println("Correct Instances: " + correct + " out of " + total);
+		System.out.println("Incorrect Instances: " + (total-correct) + " out of " + total);
+		System.out.println("Classification Accuracy: " + String.format("%.4f", accuracy*100) + " % (4 dp)");
 	}
 
 }
