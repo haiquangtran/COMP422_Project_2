@@ -1,7 +1,7 @@
 package questions;
 
 import util.FileLoader;
-import k_nearest_neighbour.DigitReader;
+import k_nearest_neighbour.DatasetLoader;
 
 public class Question_2 {
 
@@ -35,7 +35,7 @@ public class Question_2 {
 		//Training set
 		String line = FileLoader.getFilePath("digits00");
 		//Test set
-		DigitReader reader = new DigitReader(line, line);
+		DatasetLoader reader = new DatasetLoader(line);
 	}
 
 }
