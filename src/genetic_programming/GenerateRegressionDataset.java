@@ -37,6 +37,13 @@ public class GenerateRegressionDataset {
 		}
 	}
 
+	/**
+	 * A Symbolic Regression Problem we are trying to solve.
+	 * This is the class output for our file, since we want GP to solve for this equation.
+	 *
+	 * @param x
+	 * @return
+	 */
 	public double regressionProblem(double x) {
 		if (x > 0) {
 			return (1/x) + Math.sin(x);
