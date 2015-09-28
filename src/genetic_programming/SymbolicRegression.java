@@ -1145,9 +1145,16 @@ extends GPProblem {
 					// rate.
 					// -------------------------------------------------------------------
 
-					// hakank: TODO: test with different metrics...
-					error += Math.abs(result - data[outputVariable][j]); // original
-					// error += Math.pow(Math.abs(result - data[outputVariable][j]),2);
+
+					error += Math.pow(result - data[outputVariable][j], 2);
+
+					// Root Mean Squared Error
+					if (j == numRows-1) {
+						// Average
+						double average = error/(j+1);
+						// Root Mean Squared Error
+						error = Math.sqrt(average);
+					}
 
 					// If the error is too high, stop evaluation and return worst error
 					// possible.
@@ -1162,12 +1169,6 @@ extends GPProblem {
 					throw ex;
 				}
 			}
-			/*
-        // experimental
-        ProgramChromosome chrom = ind.getChromosome(0);
-        String program = chrom.toStringNorm(0);
-        double length = program.length();
-			 */
 
 			// If the fitness is very close to 0.0 then we maybe bump it
 			// up to see alternative solutions.
@@ -1191,15 +1192,6 @@ extends GPProblem {
 				}
 				error = 0.1d;
 			}
-			// a simplistc version of length punishing
-			/*
-        // too experimental
-        if (punishLength) {
-          return error + length;
-        } else {
-          return error;
-        }
-			 */
 
 			if (scaleError > 0.0d) {
 				return error * scaleError;
