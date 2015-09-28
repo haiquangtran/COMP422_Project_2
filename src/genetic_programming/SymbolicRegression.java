@@ -1118,6 +1118,7 @@ extends GPProblem {
 		}
 
 		public double computeRawFitness(final IGPProgram ind) {
+			double rootMeanSquaredError = 0;
 			double error = 0.0f;
 			Object[] noargs = new Object[0];
 			// Evaluate function for the input numbers
@@ -1145,16 +1146,7 @@ extends GPProblem {
 					// rate.
 					// -------------------------------------------------------------------
 
-
 					error += Math.pow(result - data[outputVariable][j], 2);
-
-					// Root Mean Squared Error
-					if (j == numRows-1) {
-						// Average
-						double average = error/(j+1);
-						// Root Mean Squared Error
-						error = Math.sqrt(average);
-					}
 
 					// If the error is too high, stop evaluation and return worst error
 					// possible.
@@ -1169,6 +1161,11 @@ extends GPProblem {
 					throw ex;
 				}
 			}
+
+			// Average
+			double average = error/(numRows);
+			// Root Mean Squared Error
+			error = Math.sqrt(average);
 
 			// If the fitness is very close to 0.0 then we maybe bump it
 			// up to see alternative solutions.
