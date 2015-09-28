@@ -22,8 +22,8 @@ public class Question_3 {
 	 */
 	public static void main(String[] args) {
 		try {
-			int min = -10;
-			int max = 10;
+			int min = -100;
+			int max = 100;
 			int numOfExamples = 1000;
 			String fileName = FileLoader.getFilePath("symbolic_dataset");
 			// Generate data set first
