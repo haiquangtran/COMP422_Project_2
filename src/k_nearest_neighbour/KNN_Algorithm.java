@@ -50,11 +50,6 @@ public class KNN_Algorithm {
 			// Neighbours <Class, Frequency>
 			HashMap<Integer, Integer> neighbours = getKNearestNeighbours(kValue);
 
-			for(int i = 0 ; i < kValue ; i ++){
-				System.out.println(trainingSet.get(i).getDigitClass());
-				System.out.println(testPoint.distanceTo(trainingSet.get(i)) + "\n");
-			}
-
 			// Find the majority class (for classification)
 			int majorityClass = getMajorityClass(neighbours);
 
@@ -68,7 +63,6 @@ public class KNN_Algorithm {
 			}
 
 			total++;
-//			return;
 		}
 
 		//Accuracy percentage
@@ -80,7 +74,16 @@ public class KNN_Algorithm {
 		System.out.println("Incorrect Instances: " + (total-correct) + " out of " + total);
 		System.out.println("Classification Accuracy: " + String.format("%.4f", accuracy*100) + " % (4 dp)");
 	}
-	
+
+	/**
+	 * Classification: 
+	 * Checks whether the testClass is the same as the majority class.
+	 * If they are the same it returns 1, otherwise returns 0.
+	 *  
+	 * @param testClass the class from the test point
+	 * @param majorityClass any neighbour class with the highest frequency
+	 * @return 1 if correct, 0 if not
+	 */
 	public int checkCorrectClassification(int testClass, int majorityClass) {
 		if (testClass == majorityClass){
 			System.out.println("Correct classification: " + majorityClass +" of " + testClass);
@@ -91,6 +94,16 @@ public class KNN_Algorithm {
 		return 0;
 	}
 
+	/**
+	 * Special case:
+	 * Retrieves the neighbour with the closest distance if there are multiple majority neighbour classes.
+	 * If the distances are the same, then it retrieves the class according to the closest equal class to 
+	 * the index 0 in the training set .
+	 * 
+	 * @param neighbours HashMap<Class, Frequency>
+	 * @param majorityClass any majority class with the highest number of frequency
+	 * @return
+	 */
 	public int getClosestNeighbourClass(HashMap<Integer, Integer> neighbours, int majorityClass) {
 		HashSet<Integer> majorityNeighbours = getEqualMajoritySet(neighbours, majorityClass);
 		for (int i = 0; i < trainingSet.size(); i++) {
@@ -104,6 +117,12 @@ public class KNN_Algorithm {
 		return -1;
 	}
 
+	/**
+	 * Retrieves any majority class with the highest frequency. 
+	 * 
+	 * @param neighbours HashMap<Class, Frequency>
+	 * @return int, the majority class label
+	 */
 	public int getMajorityClass(HashMap<Integer, Integer> neighbours) {
 		int majorityClass = Integer.MIN_VALUE;
 		int majorityFrequency = 0;
@@ -114,11 +133,17 @@ public class KNN_Algorithm {
 				majorityFrequency = neighbour.getValue();
 			}
 
-			System.out.println("CLOSEST NEIGHBOURS: " + neighbour.getKey() + " VALUE: " + neighbour.getValue());
+			// System.out.println("CLOSEST NEIGHBOURS: " + neighbour.getKey() + " VALUE: " + neighbour.getValue());
 		}
 		return majorityClass;
 	}
 
+	/**
+	 * Retrieves the K Nearest Neighbours in the form of <Class, Frequency>.
+	 * 
+	 * @param kValue k
+	 * @return HashMap<Class, Frequency>
+	 */
 	public HashMap<Integer, Integer> getKNearestNeighbours(int kValue) {
 		// Map of neighbours <class, frequency>
 		HashMap<Integer, Integer> neighbours = new HashMap<Integer, Integer>();
@@ -134,10 +159,12 @@ public class KNN_Algorithm {
 	}
 
 	/**
+	 * Special case:
+	 * Checks to see if there are multiple distinct majority neighbour classes with the highest frequency. 
 	 * 
 	 * @param neighbours HashMap<class, frequency> 
 	 * @param majorityClass the neighbour's class with the highest frequency
-	 * @return
+	 * @return true if multiple majority classes, false otherwise
 	 */
 	public boolean isEqualNeighbours(HashMap<Integer, Integer> neighbours, int majorityClass) {
 		int majorityFrequency = neighbours.get(majorityClass);
@@ -149,6 +176,14 @@ public class KNN_Algorithm {
 		return false;
 	}
 
+	/**
+	 * Special case:
+	 * Retrieves all the distinct classes of the neighbours with the highest frequency.
+	 * 
+	 * @param neighbours HashMap of Neighbours <Class, Frequency> 
+	 * @param majorityClass Any majority class with the highest frequency
+	 * @return
+	 */
 	public HashSet<Integer> getEqualMajoritySet(HashMap<Integer, Integer> neighbours, int majorityClass) {
 		HashSet<Integer> equalNeighboursList = new HashSet<Integer>();
 		int majorityFrequency = neighbours.get(majorityClass);
