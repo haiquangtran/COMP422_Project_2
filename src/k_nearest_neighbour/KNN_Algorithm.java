@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.Set;
 
 public class KNN_Algorithm {
 	private ArrayList<DigitImage> trainingSet = new ArrayList<DigitImage>();
@@ -17,7 +19,7 @@ public class KNN_Algorithm {
 		this.testSet = testSet;
 	}
 
-	public void calculate(){
+	public void calculate() {
 		// Statistics
 		int total = 0;
 		int correct = 0;
@@ -27,7 +29,7 @@ public class KNN_Algorithm {
 		int kValue = input.nextInt();
 
 		System.out.println("Calculating Classification Accuracy of K-Nearest Neighbour...");
-		System.out.println("May take a while, please wait...");
+
 		// Classify all data points in the test set
 		for (final DigitImage testPoint: testSet) {
 			// Sort array list according to the new test point
@@ -38,60 +40,35 @@ public class KNN_Algorithm {
 				}
 			});
 
-			// Map of Neighbours <Class, Frequency>
-			HashMap<Integer, Integer> neighbours = new HashMap<Integer, Integer>();
-
-			// Neighbours cannot be larger than trainingSet size
+			// Neighbours cannot be larger than training set size
 			if (kValue > trainingSet.size()) {
+				kValue = trainingSet.size();
 				System.out.println("K Neighbours cannot be larger than the training set size.");
 				System.out.println("K Neighbour is now set to the training set size.");
-				kValue = trainingSet.size();
 			}
 
-			// Retrieve the K Nearest Neighbours
-			for (int i = 0; i < kValue; i++){
-				// Calculate the majority vote (for classification)
-				if (neighbours.get(trainingSet.get(i).getDigitClass()) == null){
-					neighbours.put(trainingSet.get(i).getDigitClass(), 1);
-				} else {
-					neighbours.put(trainingSet.get(i).getDigitClass(), neighbours.get(trainingSet.get(i).getDigitClass()) + 1);
-				}
-			}
+			// Neighbours <Class, Frequency>
+			HashMap<Integer, Integer> neighbours = getKNearestNeighbours(kValue);
 
-			for(int i = 0 ; i < 10 ; i ++){
+			for(int i = 0 ; i < kValue ; i ++){
 				System.out.println(trainingSet.get(i).getDigitClass());
 				System.out.println(testPoint.distanceTo(trainingSet.get(i)) + "\n");
-
 			}
 
-			// Classify
-			int majorityClass = -1;
-			int classification = -1;
+			// Find the majority class (for classification)
+			int majorityClass = getMajorityClass(neighbours);
 
-			//Classification of majority class
-			for (Entry<Integer, Integer> k: neighbours.entrySet())
-			{
-				//Set the majority class
-				if (k.getValue() > majorityClass){
-					majorityClass = k.getValue();
-					classification = k.getKey();
-				}
-
-				System.out.println("CLOSEST NEIGHBOURS: " + k.getKey() + " VALUE: " + k.getValue());
-			}
-
-			// Classification Accuracy
-			if (testPoint.getDigitClass() == classification){
-				System.out.println("Correct classification: " + classification +" of " + testPoint.getDigitClass());
-				correct++;
-			} else if (classification == -1) {
-				System.out.println("Could not classify the test point. It should be :" + testPoint.getDigitClass());
+			// Special case where the highest frequency number of multiple neighbours are the same
+			if (isEqualNeighbours(neighbours, majorityClass)) {
+				// Choose closest distance from multiple neighbours with highest frequency
+				int majority = getClosestNeighbourClass(neighbours, majorityClass);
+				correct += checkCorrectClassification(testPoint.getDigitClass(), majority);
 			} else {
-				System.out.println("Incorrect classification: " + classification +" should be :" + testPoint.getDigitClass());
+				correct += checkCorrectClassification(testPoint.getDigitClass(), majorityClass);
 			}
 
 			total++;
-			return;
+//			return;
 		}
 
 		//Accuracy percentage
@@ -102,6 +79,85 @@ public class KNN_Algorithm {
 		System.out.println("Correct Instances: " + correct + " out of " + total);
 		System.out.println("Incorrect Instances: " + (total-correct) + " out of " + total);
 		System.out.println("Classification Accuracy: " + String.format("%.4f", accuracy*100) + " % (4 dp)");
+	}
+	
+	public int checkCorrectClassification(int testClass, int majorityClass) {
+		if (testClass == majorityClass){
+			System.out.println("Correct classification: " + majorityClass +" of " + testClass);
+			return 1;
+		} else {
+			System.out.println("Incorrect classification: " + majorityClass +" should be :" + testClass);
+		}
+		return 0;
+	}
+
+	public int getClosestNeighbourClass(HashMap<Integer, Integer> neighbours, int majorityClass) {
+		HashSet<Integer> majorityNeighbours = getEqualMajoritySet(neighbours, majorityClass);
+		for (int i = 0; i < trainingSet.size(); i++) {
+			for (Integer majority: majorityNeighbours) {
+				// Return class with closest distance (training set is sorted by distance)
+				if (majority == trainingSet.get(i).getDigitClass()) {
+					return majority;
+				}
+			}	
+		}
+		return -1;
+	}
+
+	public int getMajorityClass(HashMap<Integer, Integer> neighbours) {
+		int majorityClass = Integer.MIN_VALUE;
+		int majorityFrequency = 0;
+		for (Entry<Integer, Integer> neighbour: neighbours.entrySet()) {
+			// Set the Majority class
+			if (neighbour.getValue() > majorityFrequency){
+				majorityClass = neighbour.getKey();
+				majorityFrequency = neighbour.getValue();
+			}
+
+			System.out.println("CLOSEST NEIGHBOURS: " + neighbour.getKey() + " VALUE: " + neighbour.getValue());
+		}
+		return majorityClass;
+	}
+
+	public HashMap<Integer, Integer> getKNearestNeighbours(int kValue) {
+		// Map of neighbours <class, frequency>
+		HashMap<Integer, Integer> neighbours = new HashMap<Integer, Integer>();
+
+		for (int i = 0; i < kValue; i++) {
+			if (neighbours.get(trainingSet.get(i).getDigitClass()) == null) {
+				neighbours.put(trainingSet.get(i).getDigitClass(), 1);
+			} else {
+				neighbours.put(trainingSet.get(i).getDigitClass(), neighbours.get(trainingSet.get(i).getDigitClass()) + 1);
+			}
+		}
+		return neighbours;
+	}
+
+	/**
+	 * 
+	 * @param neighbours HashMap<class, frequency> 
+	 * @param majorityClass the neighbour's class with the highest frequency
+	 * @return
+	 */
+	public boolean isEqualNeighbours(HashMap<Integer, Integer> neighbours, int majorityClass) {
+		int majorityFrequency = neighbours.get(majorityClass);
+		for (Entry<Integer, Integer> neighbour: neighbours.entrySet()) {
+			if (neighbour.getKey() != majorityClass && neighbour.getValue() == majorityFrequency){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public HashSet<Integer> getEqualMajoritySet(HashMap<Integer, Integer> neighbours, int majorityClass) {
+		HashSet<Integer> equalNeighboursList = new HashSet<Integer>();
+		int majorityFrequency = neighbours.get(majorityClass);
+		for (Entry<Integer, Integer> neighbour: neighbours.entrySet()) {
+			if (neighbour.getValue() == majorityFrequency){
+				equalNeighboursList.add(neighbour.getKey());
+			}
+		}
+		return equalNeighboursList;
 	}
 
 }
