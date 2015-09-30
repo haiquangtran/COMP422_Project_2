@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
@@ -58,40 +58,40 @@ public class KNN_Algorithm {
 				}
 			}
 
+			for(int i = 0 ; i < 10 ; i ++){
+				System.out.println(trainingSet.get(i).getDigitClass());
+				System.out.println(testPoint.distanceTo(trainingSet.get(i)) + "\n");
+
+			}
+
 			// Classify
 			int majorityClass = -1;
 			int classification = -1;
-			boolean conflicted = false;
+
 			//Classification of majority class
-			for (Entry<Integer, Integer> k: neighbours.entrySet()) {
-				if (k.getValue() == majorityClass) {
-					conflicted = true;
-				}
+			for (Entry<Integer, Integer> k: neighbours.entrySet())
+			{
 				//Set the majority class
-				if (k.getValue() > majorityClass) {
+				if (k.getValue() > majorityClass){
 					majorityClass = k.getValue();
 					classification = k.getKey();
 				}
+
+				System.out.println("CLOSEST NEIGHBOURS: " + k.getKey() + " VALUE: " + k.getValue());
 			}
 
-			if (!conflicted) {
-				// Classification Accuracy
-				if (testPoint.getDigitClass() == classification){
-					System.out.println("Correct classification: " + classification +" of " + testPoint.getDigitClass());
-					correct++;
-				} else {
-					System.out.println("Incorrect classification: " + classification +" should be :" + testPoint.getDigitClass());
-				}
+			// Classification Accuracy
+			if (testPoint.getDigitClass() == classification){
+				System.out.println("Correct classification: " + classification +" of " + testPoint.getDigitClass());
+				correct++;
+			} else if (classification == -1) {
+				System.out.println("Could not classify the test point. It should be :" + testPoint.getDigitClass());
 			} else {
-				if (testPoint.getDigitClass() == trainingSet.get(0).getDigitClass()) {
-					correct++;
-					System.out.println("Correct classification: " + trainingSet.get(0).getDigitClass() +" of " + testPoint.getDigitClass());
-				} else {
-					System.out.println("Incorrect classification: " + trainingSet.get(0).getDigitClass() +" should be :" + testPoint.getDigitClass());
-				}
+				System.out.println("Incorrect classification: " + classification +" should be :" + testPoint.getDigitClass());
 			}
 
 			total++;
+			return;
 		}
 
 		//Accuracy percentage
