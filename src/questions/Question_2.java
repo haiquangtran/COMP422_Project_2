@@ -42,7 +42,7 @@ public class Question_2 {
 		ArrayList<DigitImage> testSet = dataLoader.getTestSet();
 		// Classify test data using K-Nearest Neighbour Algorithm
 		KNN_Algorithm knn = new KNN_Algorithm(trainingSet, testSet);
-		knn.calculate(false);
+		knn.calculate();
 	}
 
 }

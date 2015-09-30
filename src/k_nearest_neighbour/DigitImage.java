@@ -37,4 +37,17 @@ public class DigitImage {
 		return digitClass;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder digitsString = new StringBuilder();
+		//Pixels of the digit
+		for (int i = 0; i < digits.length; i++) {
+			digitsString.append(digits[i] + " ");
+		}
+		//Class
+		digitsString.append(digitClass);
+
+		return digitsString.toString();
+	}
+
 }
