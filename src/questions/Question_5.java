@@ -16,7 +16,7 @@ import weka.gui.treevisualizer.TreeVisualizer;
 public class Question_5 {
 
 	/**
-	 * First apply the na¨ıve Bayes and Decision Tree (C4.5) classifiers to the Balance Scale and
+	 * First apply the naive Bayes and Decision Tree (C4.5) classifiers to the Balance Scale and
 	 * Wine Recognition datasets and measure the classification performance using 10-fold crossvalidation.
 	 * Then develop a GP-based feature construction algorithm to construct features for
 	 * the two problems. Feed the constructed features to these classifiers and report changes in

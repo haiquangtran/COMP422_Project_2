@@ -26,9 +26,11 @@ public class Question_4 {
 	 */
 	public static void main(String[] args) {
 		ParticleSwarmOptimisation pso = new ParticleSwarmOptimisation();
+
 		// Fitness functions
 		FitnessFunction rosenbrock = new RosenbrockFitnessFunction();
 		FitnessFunction griewank = new GriewankFitnessFunction();
+
 		pso.calculate(rosenbrock);
 	}
 

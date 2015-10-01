@@ -26,6 +26,7 @@ public class Question_3 {
 			int max = 500;
 			int numOfExamples = 1000;
 			String fileName = FileLoader.getFilePath("symbolic_dataset");
+
 			// Generate data set first
 			GenerateRegressionDataset dataset = new GenerateRegressionDataset(fileName, numOfExamples, min, max);
 
