@@ -1,5 +1,8 @@
 package questions;
 
+import single_feature_ranking.PearsonFeatureRanking;
+import single_feature_ranking.SingleFeatureRanking;
+
 public class Question_6 {
 
 	/**
@@ -16,6 +19,7 @@ public class Question_6 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		SingleFeatureRanking pearsons = new PearsonFeatureRanking(null);
 
 	}
 

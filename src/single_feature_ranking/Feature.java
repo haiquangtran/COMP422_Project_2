@@ -1,26 +1,35 @@
 package single_feature_ranking;
 
 public class Feature {
-	private int x;
-	private int y;
-	private double score;
+	private double[] features;
+	private int featureClass;
 
-	public Feature(int x, int y, double score) {
-		this.x = x;
-		this.y = y;
-		this.score = score;
+	public Feature(int featureSize, int featureClass) {
+		this.features = new double[featureSize];
+		this.featureClass = featureClass;
 	}
 
-	public int getX() {
-		return x;
+	public double comparePearsonCorrelationTo(Feature other) {
+		double x = 0;
+		double y = 0;
+		double totalProduct = 0;
+		int n = features.length;
+		double r = 0;
+
+		// Find totals for xy, x and y
+		for (int i = 0; i < n; i++) {
+			x += features[i];
+			y += other.getFeatures()[i];
+			totalProduct += x * y;
+		}
+		// TODO: Check this equation
+		r = n * (totalProduct) - (x*y) / Math.sqrt((n*Math.pow(x, 2)-Math.pow(x, 2))*(n*Math.pow(y, 2)-Math.pow(y, 2)));
+		// r in [-1, 1]
+		return r;
 	}
 
-	public int getY() {
-		return y;
-	}
-
-	public double getScore() {
-		return score;
+	public double[] getFeatures() {
+		return features;
 	}
 
 }
