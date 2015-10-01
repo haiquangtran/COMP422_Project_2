@@ -2,11 +2,31 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="D:/Victoria University/Year 4/COMP422-Data-Mining/Project_2/COMP422_project_2/.settings"/>
-	<classpathentry kind="lib" path="D:/Victoria University/Year 4/COMP422-Data-Mining/Project_2/dependencies/jswarm-pso_2_08.jar"/>
-	<classpathentry kind="lib" path="D:/Victoria University/Year 4/COMP422-Data-Mining/Project_2/dependencies/weka.jar"/>
-	<classpathentry kind="lib" path="D:/Victoria University/Year 4/COMP422-Data-Mining/Project_2/dependencies/jgap/jgap.jar"/>
-	<classpathentry kind="lib" path="D:/Victoria University/Year 4/COMP422-Data-Mining/Project_2/dependencies/jgap/jgap-examples.jar"/>
-	<classpathentry kind="lib" path="D:/Victoria University/Year 4/COMP422-Data-Mining/Project_2/dependencies/jgap/jgap-tests.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/weka.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jswarm-pso_2_08.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/jgap-tests.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/jgap-examples.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/jgap.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/xstream-1.3.1.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/xstream-1.2.2.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/xpp3_min-1.1.4c.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/xpp3_min-1.1.3.4.O.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/trove-2.0.2.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/TableLayout.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/swing-worker-1.1.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/swing-layout-1.0.3.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/log4j.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/jxl.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/junit-addons-1.4.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/junit3.8.1.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/jfreechart-1.0.11.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/jettison-1.3.1.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/jcommon-1.0.14.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/jcgrid.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/commons-math-2.0.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/commons-lang-2.1.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/commons-codec-1.3.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/appframework-1.0.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
