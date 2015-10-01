@@ -8,11 +8,28 @@ public class RosenbrockFitnessFunction extends FitnessFunction {
 		super(false);
 	}
 
-	public double evaluate(double position[]) {
-		double x1 = position[0];
-		double x2 = position[1];
-		return 20.0 + (x1 * x1) + (x2 * x2) - 10.0 * (Math.cos(2 * Math.PI * x1) + Math.cos(2 * Math.PI * x2));
-//		return position[0] + position[1];
+	/**
+	 * Fitness function used to evaluate PSO
+	 */
+	public double evaluate(double dimension[]) {
+		// Rosenbrock's function
+		return rosenbrocksFunction(dimension);
+	}
+
+	/**
+	 * Rosenbrock's function
+	 *
+	 */
+	public double rosenbrocksFunction(double dimension[]) {
+		double rosenbrocks = 0;
+		//TODO: Check why D-1 (Check the loop)
+		for (int i = 0; i < dimension.length; i++) {
+			if (dimension[i] <= 30 && dimension[i] >= -30) {
+				rosenbrocks += 100 * Math.pow((Math.pow(dimension[i], 2)-(dimension[i]+1)), 2) + Math.pow((dimension[i]-1), 2);
+			}
+		}
+
+		return rosenbrocks;
 	}
 
 }

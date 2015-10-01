@@ -8,11 +8,37 @@ public class GriewankFitnessFunction extends FitnessFunction {
 		super(false);
 	}
 
-	public double evaluate(double position[]) {
-		double x1 = position[0];
-		double x2 = position[1];
-		return 20.0 + (x1 * x1) + (x2 * x2) - 10.0 * (Math.cos(2 * Math.PI * x1) + Math.cos(2 * Math.PI * x2));
-//		return position[0] + position[1];
+	/**
+	 * Fitness function used to evaluate PSO
+	 */
+	public double evaluate(double dimension[]) {
+		// Griewank's function
+		return griewanksFunction(dimension);
 	}
 
+	/**
+	 *  Griewank's function
+	 */
+	public double griewanksFunction(double dimension[]) {
+		double griewanks = 0;
+		for (int i = 0; i < dimension.length; i++) {
+			if (dimension[i] <= 30 && dimension[i] >= 30) {
+				griewanks += (Math.pow(dimension[i], 2)/4000) + getGriewanks(dimension);
+			}
+		}
+
+		return griewanks;
+	}
+
+	/**
+	 *  Griewank's function helper.
+	 *  Return the second part of the equation.
+	 */
+	private double getGriewanks(double dimension[]) {
+		double griewanks = 0;
+		for (int i = 0; i < dimension.length; i++) {
+			griewanks = Math.cos(dimension[i]/Math.sqrt(i)) + 1;
+		}
+		return griewanks;
+	}
 }

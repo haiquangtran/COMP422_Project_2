@@ -1,5 +1,6 @@
 package particle_swarm_optimisation;
 
+import net.sourceforge.jswarm_pso.FitnessFunction;
 import net.sourceforge.jswarm_pso.Neighborhood;
 import net.sourceforge.jswarm_pso.Neighborhood1D;
 import net.sourceforge.jswarm_pso.Swarm;
@@ -17,11 +18,14 @@ import net.sourceforge.jswarm_pso.example_2.SwarmShow2D;
  */
 public class ParticleSwarmOptimisation {
 
-	public void calculate() {
-		System.out.println("Example of Particle Swarm Optimization: Optimizing Rastrijin's funtion");
+	public void calculate(FitnessFunction fitnessFunction) {
+		System.out.println("Example of Particle Swarm Optimization: Optimizing by minimizing " +  fitnessFunction.toString() + "'s function.");
 
-		// Create a swarm (using 'MyParticle' as sample particle and 'MyFitnessFunction' as finess function)
-		Swarm swarm = new Swarm(Swarm.DEFAULT_NUMBER_OF_PARTICLES, new MyParticle(), new RosenbrockFitnessFunction());
+		//Set dimensions
+		MyParticle.NUMBER_OF_DIMENTIONS = 20;
+
+		// Create a swarm (using 'MyParticle' as sample particle and 'MyFitnessFunction' as fitness function)
+		Swarm swarm = new Swarm(Swarm.DEFAULT_NUMBER_OF_PARTICLES, new MyParticle(), fitnessFunction);
 
 		// Use neighborhood
 		Neighborhood neigh = new Neighborhood1D(Swarm.DEFAULT_NUMBER_OF_PARTICLES / 5, true);

@@ -1,6 +1,9 @@
 package questions;
 
+import net.sourceforge.jswarm_pso.FitnessFunction;
+import particle_swarm_optimisation.GriewankFitnessFunction;
 import particle_swarm_optimisation.ParticleSwarmOptimisation;
+import particle_swarm_optimisation.RosenbrockFitnessFunction;
 
 public class Question_4 {
 
@@ -23,8 +26,10 @@ public class Question_4 {
 	 */
 	public static void main(String[] args) {
 		ParticleSwarmOptimisation pso = new ParticleSwarmOptimisation();
-
-		pso.calculate();
+		// Fitness functions
+		FitnessFunction rosenbrock = new RosenbrockFitnessFunction();
+		FitnessFunction griewank = new GriewankFitnessFunction();
+		pso.calculate(rosenbrock);
 	}
 
 }
