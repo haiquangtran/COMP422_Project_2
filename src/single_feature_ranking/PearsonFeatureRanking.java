@@ -8,6 +8,7 @@ public class PearsonFeatureRanking extends SingleFeatureRanking {
 
 	public PearsonFeatureRanking(ArrayList<Feature> features) {
 		super(features);
+		sortFeatures();
 	}
 
 	private void sortFeatures() {
@@ -17,16 +18,6 @@ public class PearsonFeatureRanking extends SingleFeatureRanking {
 				return Double.compare(feature2.comparePearsonCorrelationTo(feature2),  feature1.comparePearsonCorrelationTo(feature2));
 			}
 		});
-	}
-
-	private Feature[] getTopFeatures(int n) {
-		Feature[] topFeatures = new Feature[n];
-
-		for (int i = 0; i < n; i++) {
-			topFeatures[i] = this.getFeatures().get(i);
-		}
-
-		return topFeatures;
 	}
 
 }
