@@ -47,4 +47,19 @@ public class Question_2 {
 		knn.calculate();
 	}
 
+	private static void printAverageResults(KNN_Algorithm knn, int runs) {
+		double totalAccuracy = 0;
+		double mean = 0;
+
+		// Run 10 times and average results
+		for (int i = 0; i < runs; i++) {
+			knn.calculate();
+			totalAccuracy += knn.getClassificationAccuracy();
+		}
+		mean = totalAccuracy/runs * 100;
+		// Print results over average
+		System.out.println("Total runs: " + runs);
+		System.out.println("Average Classification Accuracy: " + mean);
+	}
+
 }

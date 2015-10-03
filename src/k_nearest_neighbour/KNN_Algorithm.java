@@ -11,6 +11,10 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class KNN_Algorithm {
+	private double classificationAccuracy;
+	private int correctClassifications;
+	private int incorrectClassifications;
+
 	private ArrayList<DigitImage> trainingSet = new ArrayList<DigitImage>();
 	private ArrayList<DigitImage> testSet = new ArrayList<DigitImage>();
 
@@ -67,14 +71,37 @@ public class KNN_Algorithm {
 			total++;
 		}
 
+		printResults(kValue, correct, total);
+	}
+
+	private void printResults(int kValue, int correctInstances, int total) {
+		//Set fields
+		correctClassifications = correctInstances;
+		incorrectClassifications = correctInstances-total;
 		//Accuracy percentage
-		double accuracy = (double)correct/(double)total;
+		classificationAccuracy = (double)correctInstances/(double)total;
 		//Print out the statistics
 		System.out.println("\nK Nearest Neighbour Results:");
 		System.out.println("K value is " + kValue);
-		System.out.println("Correct Instances: " + correct + " out of " + total);
-		System.out.println("Incorrect Instances: " + (total-correct) + " out of " + total);
-		System.out.println("Classification Accuracy: " + String.format("%.4f", accuracy*100) + " % (4 dp)");
+		System.out.println("Correct Instances: " + correctInstances + " out of " + total);
+		System.out.println("Incorrect Instances: " + (total-correctInstances) + " out of " + total);
+		System.out.println("Classification Accuracy: " + String.format("%.4f", classificationAccuracy*100) + " % (4 dp)");
+	}
+
+	public double getClassificationAccuracy() {
+		return classificationAccuracy;
+	}
+
+	public int getNumberOfCorrectClassifications() {
+		return correctClassifications;
+	}
+
+	public int getNumberOfIncorrectClassifications() {
+		return incorrectClassifications;
+	}
+
+	public int getTotalClassifications() {
+		return correctClassifications + incorrectClassifications;
 	}
 
 	/**
@@ -92,8 +119,8 @@ public class KNN_Algorithm {
 			return 1;
 		} else {
 			System.out.println("Incorrect classification: " + majorityClass +" should be :" + testClass);
+			return 0;
 		}
-		return 0;
 	}
 
 	/**
