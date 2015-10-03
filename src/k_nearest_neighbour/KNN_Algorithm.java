@@ -24,9 +24,11 @@ public class KNN_Algorithm {
 		int total = 0;
 		int correct = 0;
 		// Ask for user input
-		System.out.println("Please input k value:");
-		Scanner input = new Scanner(System.in);
-		int kValue = input.nextInt();
+		// TODO: uncomment this for KNN
+		//		System.out.println("Please input k value:");
+		//		Scanner input = new Scanner(System.in);
+		//		int kValue = input.nextInt();
+		int kValue = 1;
 
 		System.out.println("Calculating Classification Accuracy of K-Nearest Neighbour...");
 
@@ -76,10 +78,10 @@ public class KNN_Algorithm {
 	}
 
 	/**
-	 * Classification: 
+	 * Classification:
 	 * Checks whether the testClass is the same as the majority class.
 	 * If they are the same it returns 1, otherwise returns 0.
-	 *  
+	 *
 	 * @param testClass the class from the test point
 	 * @param majorityClass any neighbour class with the highest frequency
 	 * @return 1 if correct, 0 if not
@@ -97,9 +99,9 @@ public class KNN_Algorithm {
 	/**
 	 * Special case:
 	 * Retrieves the neighbour with the closest distance if there are multiple majority neighbour classes.
-	 * If the distances are the same, then it retrieves the class according to the closest equal class to 
+	 * If the distances are the same, then it retrieves the class according to the closest equal class to
 	 * the index 0 in the training set .
-	 * 
+	 *
 	 * @param neighbours HashMap<Class, Frequency>
 	 * @param majorityClass any majority class with the highest number of frequency
 	 * @return
@@ -112,14 +114,14 @@ public class KNN_Algorithm {
 				if (majority == trainingSet.get(i).getDigitClass()) {
 					return majority;
 				}
-			}	
+			}
 		}
 		return -1;
 	}
 
 	/**
-	 * Retrieves any majority class with the highest frequency. 
-	 * 
+	 * Retrieves any majority class with the highest frequency.
+	 *
 	 * @param neighbours HashMap<Class, Frequency>
 	 * @return int, the majority class label
 	 */
@@ -140,7 +142,7 @@ public class KNN_Algorithm {
 
 	/**
 	 * Retrieves the K Nearest Neighbours in the form of <Class, Frequency>.
-	 * 
+	 *
 	 * @param kValue k
 	 * @return HashMap<Class, Frequency>
 	 */
@@ -160,9 +162,9 @@ public class KNN_Algorithm {
 
 	/**
 	 * Special case:
-	 * Checks to see if there are multiple distinct majority neighbour classes with the highest frequency. 
-	 * 
-	 * @param neighbours HashMap<class, frequency> 
+	 * Checks to see if there are multiple distinct majority neighbour classes with the highest frequency.
+	 *
+	 * @param neighbours HashMap<class, frequency>
 	 * @param majorityClass the neighbour's class with the highest frequency
 	 * @return true if multiple majority classes, false otherwise
 	 */
@@ -179,8 +181,8 @@ public class KNN_Algorithm {
 	/**
 	 * Special case:
 	 * Retrieves all the distinct classes of the neighbours with the highest frequency.
-	 * 
-	 * @param neighbours HashMap of Neighbours <Class, Frequency> 
+	 *
+	 * @param neighbours HashMap of Neighbours <Class, Frequency>
 	 * @param majorityClass Any majority class with the highest frequency
 	 * @return
 	 */
