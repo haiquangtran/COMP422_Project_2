@@ -25,7 +25,7 @@ public class Feature {
 			totalProduct += x * y;
 		}
 		// TODO: Check this equation
-		r = n * (totalProduct) - (x*y) / Math.sqrt((n*Math.pow(x, 2)-Math.pow(x, 2))*(n*Math.pow(y, 2)-Math.pow(y, 2)));
+		r = (n * (totalProduct) - (x)*(y)) / (Math.sqrt((n*Math.pow(x, 2)-Math.pow(x, 2))*(n*Math.pow(y, 2)-Math.pow(y, 2))));
 		this.pearsonScore = r;
 
 		// r in [-1, 1]
