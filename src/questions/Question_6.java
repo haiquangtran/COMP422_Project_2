@@ -2,7 +2,7 @@ package questions;
 
 import java.util.ArrayList;
 
-import single_feature_ranking.DatasetLoader;
+import single_feature_ranking.DatasetFileCreater;
 import single_feature_ranking.Feature;
 import single_feature_ranking.PearsonFeatureRanking;
 import single_feature_ranking.SingleFeatureRanking;
@@ -24,23 +24,20 @@ public class Question_6 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String wbcd = FileLoader.getFilePath("wbcd.data");
-		String sonar = FileLoader.getFilePath("sonar.data");
+		String wbcd = FileLoader.getFilePath("wbcd");
+		String sonar = FileLoader.getFilePath("sonar");
+		String fileType = ".data";
 
 		int trainingSize = 500;
 
-		// Load datasets
-		DatasetLoader dataLoader = new DatasetLoader(wbcd, trainingSize);
-		ArrayList<Feature> trainingSet = dataLoader.getTrainingSet();
-		ArrayList<Feature> testSet = dataLoader.getTestSet();
+		// Create training set and test set csv files
+		DatasetFileCreater dataLoader = new DatasetFileCreater(wbcd + fileType, wbcd+"_training.csv", wbcd+"_test.csv", trainingSize);
+		// Load training set and test set csv files
+		String trainingSet = dataLoader.getTrainingSetFileName();
+		String testSet = dataLoader.getTestSetFileName();
 
-		SingleFeatureRanking pearson = new PearsonFeatureRanking(trainingSet);
-		Feature[] features = pearson.getTopFeatures(10);
+		SingleFeatureRanking pearson = new PearsonFeatureRanking(trainingSet, testSet);
 
-		// Test
-		for (int i = 0; i < features.length; i++) {
-			System.out.println(features[i]);
-		}
 	}
 
 }

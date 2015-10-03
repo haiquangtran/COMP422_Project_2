@@ -5,24 +5,24 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public abstract class SingleFeatureRanking {
-	private ArrayList<Feature> features;
+	private String trainingSetFileName;
+	private String testSetFileName;
 
-	public SingleFeatureRanking(ArrayList<Feature> features) {
-		this.features = features;
-	}
-
-	public ArrayList<Feature> getFeatures() {
-		return features;
+	public SingleFeatureRanking(String trainingSetFileName, String testSetFileName) {
+		this.trainingSetFileName = trainingSetFileName;
+		this.testSetFileName = testSetFileName;
 	}
 
 	public Feature[] getTopFeatures(int n) {
-		Feature[] topFeatures = new Feature[n];
+		return null;
+	}
 
-		for (int i = 0; i < n; i++) {
-			topFeatures[i] = this.getFeatures().get(i);
-		}
+	public String getTrainingSetFileName() {
+		return trainingSetFileName;
+	}
 
-		return topFeatures;
+	public String getTestSetFileName() {
+		return testSetFileName;
 	}
 
 }
