@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import single_feature_ranking.DatasetFileCreater;
 import single_feature_ranking.Feature;
-import single_feature_ranking.PearsonFeatureRanking;
+import single_feature_ranking.InformationGainRanking;
 import single_feature_ranking.SingleFeatureRanking;
 import util.FileLoader;
 
@@ -36,7 +36,7 @@ public class Question_6 {
 		String trainingSet = dataLoader.getTrainingSetFileName();
 		String testSet = dataLoader.getTestSetFileName();
 
-		SingleFeatureRanking pearson = new PearsonFeatureRanking(trainingSet, testSet);
+		SingleFeatureRanking infoGain = new InformationGainRanking(trainingSet, testSet);
 
 	}
 
