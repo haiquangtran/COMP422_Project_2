@@ -43,7 +43,6 @@ public class ChiSquaredRanking extends SingleFeatureRanking {
 			double[][] matrix = eval.confusionMatrix();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
