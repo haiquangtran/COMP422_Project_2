@@ -1,6 +1,8 @@
 package single_feature_ranking;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -15,9 +17,6 @@ import weka.core.converters.CSVLoader;
 
 
 public class ChiSquaredRanking extends SingleFeatureRanking {
-	private HashMap<Attribute, Double> chiScores = new HashMap<Attribute, Double>();
-	private Instances trainingSet;
-	private Instances testSet;
 
 	public ChiSquaredRanking(String trainingSetFileName, String testSetFileName) {
 		super(trainingSetFileName, testSetFileName);
@@ -25,6 +24,9 @@ public class ChiSquaredRanking extends SingleFeatureRanking {
 	}
 
 	public void classify(int numOfTopFeatures) {
+		Instances trainingSet = this.getTrainingSet();
+		Instances testSet = this.getTestSet();
+
 		try {
 			//Create a naive bayes classifier
 			Classifier naiveBayes = (Classifier) new NaiveBayes();
@@ -32,7 +34,7 @@ public class ChiSquaredRanking extends SingleFeatureRanking {
 
 			//Test the model
 			Evaluation eval = new Evaluation(trainingSet);
-			eval.crossValidateModel(naiveBayes, testSet, 10, new Random(1));
+			eval.crossValidateModel(naiveBayes, testSet, 10, new Random());
 
 			//Print the result
 			String result = eval.toSummaryString();
@@ -46,36 +48,30 @@ public class ChiSquaredRanking extends SingleFeatureRanking {
 		}
 	}
 
-	public void sortFeatures() {
-		//load CSV
-		CSVLoader loaderTrain = new CSVLoader();
-		CSVLoader loaderTest = new CSVLoader();
+	private void sortFeatures() {
+		Instances trainingSet = getTrainingSet();
 
 		try {
-			loaderTrain.setSource(new File(this.getTrainingSetFileName()));
-			loaderTest.setSource(new File(this.getTestSetFileName()));
-
-			//Set training set from CSV file
-			trainingSet = loaderTrain.getDataSet();
-			trainingSet.setClassIndex(trainingSet.numAttributes()-1);
-			//Set test set from CSV file
-			testSet = loaderTest.getDataSet();
-			testSet.setClassIndex(testSet.numAttributes()-1);
-
 			// Chi Squared
 			ChiSquaredAttributeEval evaluation = new ChiSquaredAttributeEval();
 			evaluation.buildEvaluator(trainingSet);
 
 			for (int i = 0; i < trainingSet.numAttributes(); i++) {
-				Attribute t_attr = trainingSet.attribute(i);
+				Attribute attr = trainingSet.attribute(i);
 				double chiSquared  = evaluation.evaluateAttribute(i);
-				chiScores.put(t_attr, chiSquared);
+				this.getFeatures().add(new Feature(attr, chiSquared));
 			}
 
-			// Sort
-			SingleFeatureRanking.entriesSortedByValues(chiScores, -1);
+			// sort features
+			Collections.sort(getFeatures(), new Comparator<Feature>() {
+				@Override
+				public int compare(Feature o1, Feature o2) {
+					return o1.compareTo(o2);
+				}
+			});
 
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

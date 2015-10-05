@@ -1,9 +1,13 @@
 package single_feature_ranking;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
+import k_nearest_neighbour.DigitImage;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.classifiers.Classifier;
 import weka.classifiers.bayes.NaiveBayes;
@@ -14,9 +18,6 @@ import weka.core.converters.CSVLoader;
 
 
 public class InformationGainRanking extends SingleFeatureRanking {
-	private HashMap<Attribute, Double> infoGainScores = new HashMap<Attribute, Double>();
-	private Instances trainingSet;
-	private Instances testSet;
 
 	public InformationGainRanking(String trainingSetFileName, String testSetFileName) {
 		super(trainingSetFileName, testSetFileName);
@@ -24,6 +25,9 @@ public class InformationGainRanking extends SingleFeatureRanking {
 	}
 
 	public void classify(int numOfTopFeatures) {
+		Instances trainingSet = this.getTrainingSet();
+		Instances testSet = this.getTestSet();
+
 		try {
 			//Create a naive bayes classifier
 			Classifier naiveBayes = (Classifier) new NaiveBayes();
@@ -45,36 +49,30 @@ public class InformationGainRanking extends SingleFeatureRanking {
 		}
 	}
 
-	public void sortFeatures() {
-		//load CSV
-		CSVLoader loaderTrain = new CSVLoader();
-		CSVLoader loaderTest = new CSVLoader();
+	private void sortFeatures() {
+		Instances trainingSet = getTrainingSet();
 
 		try {
-			loaderTrain.setSource(new File(this.getTrainingSetFileName()));
-			loaderTest.setSource(new File(this.getTestSetFileName()));
-
-			//Set training set from CSV file
-			trainingSet = loaderTrain.getDataSet();
-			trainingSet.setClassIndex(trainingSet.numAttributes()-1);
-			//Set test set from CSV file
-			testSet = loaderTest.getDataSet();
-			testSet.setClassIndex(testSet.numAttributes()-1);
-
 			// Information Gain
 			InfoGainAttributeEval evaluation = new InfoGainAttributeEval();
 			evaluation.buildEvaluator(trainingSet);
 
 			for (int i = 0; i < trainingSet.numAttributes(); i++) {
-				Attribute t_attr = trainingSet.attribute(i);
+				Attribute attr = trainingSet.attribute(i);
 				double infoGain  = evaluation.evaluateAttribute(i);
-				infoGainScores.put(t_attr, infoGain);
+				this.getFeatures().add(new Feature(attr, infoGain));
 			}
 
-			// Sort
-			SingleFeatureRanking.entriesSortedByValues(infoGainScores, -1);
+			// sort features
+			Collections.sort(getFeatures(), new Comparator<Feature>() {
+				@Override
+				public int compare(Feature o1, Feature o2) {
+					return o1.compareTo(o2);
+				}
+			});
 
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

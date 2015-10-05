@@ -36,8 +36,10 @@ public class Question_6 {
 		String trainingSet = dataLoader.getTrainingSetFileName();
 		String testSet = dataLoader.getTestSetFileName();
 
-		SingleFeatureRanking infoGain = new InformationGainRanking(trainingSet, testSet);
-//		SingleFeatureRanking chiSquared = new ChiSquaredRanking(trainingSet, testSet);
+		InformationGainRanking infoGain = new InformationGainRanking(trainingSet, testSet);
+
+		infoGain.getTopFeatures(20);
+//		ChiSquaredRanking chiSquared = new ChiSquaredRanking(trainingSet, testSet);
 	}
 
 }
