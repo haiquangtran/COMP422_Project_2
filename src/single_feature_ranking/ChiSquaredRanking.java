@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Random;
 
+import weka.attributeSelection.ChiSquaredAttributeEval;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.classifiers.Classifier;
 import weka.classifiers.bayes.NaiveBayes;
@@ -13,12 +14,12 @@ import weka.core.Instances;
 import weka.core.converters.CSVLoader;
 
 
-public class InformationGainRanking extends SingleFeatureRanking {
-	private HashMap<Attribute, Double> infoGainScores = new HashMap<Attribute, Double>();
+public class ChiSquaredRanking extends SingleFeatureRanking {
+	private HashMap<Attribute, Double> chiScores = new HashMap<Attribute, Double>();
 	private Instances trainingSet;
 	private Instances testSet;
 
-	public InformationGainRanking(String trainingSetFileName, String testSetFileName) {
+	public ChiSquaredRanking(String trainingSetFileName, String testSetFileName) {
 		super(trainingSetFileName, testSetFileName);
 		sortFeatures();
 	}
@@ -58,18 +59,18 @@ public class InformationGainRanking extends SingleFeatureRanking {
 			testSet = loaderTest.getDataSet();
 			testSet.setClassIndex(testSet.numAttributes()-1);
 
-			// Information Gain
-			InfoGainAttributeEval evaluation = new InfoGainAttributeEval();
+			// Chi Squared
+			ChiSquaredAttributeEval evaluation = new ChiSquaredAttributeEval();
 			evaluation.buildEvaluator(trainingSet);
 
 			for (int i = 0; i < trainingSet.numAttributes(); i++) {
 				Attribute t_attr = trainingSet.attribute(i);
-				double infoGain  = evaluation.evaluateAttribute(i);
-				infoGainScores.put(t_attr, infoGain);
+				double chiSquared  = evaluation.evaluateAttribute(i);
+				chiScores.put(t_attr, chiSquared);
 			}
 
 			// Sort
-			SingleFeatureRanking.entriesSortedByValues(infoGainScores, -1);
+			SingleFeatureRanking.entriesSortedByValues(chiScores, -1);
 
 		} catch (Exception e) {
 			e.printStackTrace();

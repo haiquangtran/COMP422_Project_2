@@ -28,5 +28,6 @@
 	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/jgap/lib/appframework-1.0.3.jar"/>
 	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/weka-3-7-13/weka.jar"/>
+	<classpathentry kind="lib" path="/am/st-james/home1/tranhai/Desktop/COMP422/Project_2/dependencies/chiSquaredAttributeEval.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

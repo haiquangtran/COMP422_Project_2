@@ -2,11 +2,13 @@ package questions;
 
 import java.util.ArrayList;
 
+import single_feature_ranking.ChiSquaredRanking;
 import single_feature_ranking.DatasetFileCreater;
 import single_feature_ranking.Feature;
 import single_feature_ranking.InformationGainRanking;
 import single_feature_ranking.SingleFeatureRanking;
 import util.FileLoader;
+import weka.attributeSelection.ChiSquaredAttributeEval;
 
 public class Question_6 {
 
@@ -37,7 +39,7 @@ public class Question_6 {
 		String testSet = dataLoader.getTestSetFileName();
 
 		SingleFeatureRanking infoGain = new InformationGainRanking(trainingSet, testSet);
-
+//		SingleFeatureRanking chiSquared = new ChiSquaredRanking(trainingSet, testSet);
 	}
 
 }
