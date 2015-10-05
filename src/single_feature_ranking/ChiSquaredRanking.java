@@ -61,11 +61,11 @@ public class ChiSquaredRanking extends SingleFeatureRanking {
 				this.getFeatures().add(new Feature(attr, chiSquared));
 			}
 
-			// sort features
+			// sort features by descending order of score
 			Collections.sort(getFeatures(), new Comparator<Feature>() {
 				@Override
 				public int compare(Feature o1, Feature o2) {
-					return o1.compareTo(o2);
+					return o2.compareTo(o1);
 				}
 			});
 
