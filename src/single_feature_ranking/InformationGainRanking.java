@@ -31,11 +31,14 @@ public class InformationGainRanking extends SingleFeatureRanking {
 
 			//Test the model
 			Evaluation eval = new Evaluation(trainingSet);
-			eval.crossValidateModel(naiveBayes, testSet, 10, new Random(1));
+			eval.crossValidateModel(naiveBayes, testSet, 10, new Random());
 
 			//Print the result
 			String result = eval.toSummaryString();
 			System.out.println(result);
+
+			double[][] matrix = eval.confusionMatrix();
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

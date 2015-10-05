@@ -37,6 +37,9 @@ public class ChiSquaredRanking extends SingleFeatureRanking {
 			//Print the result
 			String result = eval.toSummaryString();
 			System.out.println(result);
+
+			double[][] matrix = eval.confusionMatrix();
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
