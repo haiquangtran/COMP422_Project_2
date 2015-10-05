@@ -1,7 +1,6 @@
 package single_feature_ranking;
 
-import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.Comparator;
 import java.util.Map;
 import java.util.SortedSet;
@@ -25,6 +24,7 @@ public abstract class SingleFeatureRanking {
 	}
 
 	/**
+	 * Sorts a Map.
 	 * Provides a {@code SortedSet} of {@code Map.Entry} objects. The sorting is in ascending order if {@param order} > 0
 	 * and descending order if {@param order} <= 0.
 	 * @param map   The map to be sorted.
