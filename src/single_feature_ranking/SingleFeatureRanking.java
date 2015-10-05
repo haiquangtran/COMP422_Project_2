@@ -49,11 +49,11 @@ public abstract class SingleFeatureRanking {
 		}
 	}
 
-	public Attribute[] getTopFeatures(int num) {
-		Attribute[] topFeatures = new Attribute[num];
+	public Feature[] getTopFeatures(int num) {
+		Feature[] topFeatures = new Feature[num];
 
 		for (int i = 0; i < num; i++) {
-			topFeatures[i] = this.getFeatures().get(i).getAttribute();
+			topFeatures[i] = this.getFeatures().get(i);
 		}
 
 		return topFeatures;
