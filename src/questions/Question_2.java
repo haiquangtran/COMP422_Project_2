@@ -35,7 +35,7 @@ public class Question_2 {
 	 * • Compare the two methods and results and draw your conclusions.
 	 */
 	public static void main(String[] args) {
-		String filePath = FileLoader.getFilePath("digits15");
+		String filePath = FileLoader.getFilePath("digits20");
 
 		// Load datasets
 		DatasetLoader dataLoader = new DatasetLoader(filePath);

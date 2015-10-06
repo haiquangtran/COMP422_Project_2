@@ -24,11 +24,10 @@ public class Question_3 {
 		try {
 			int min = -500;
 			int max = 500;
-			int numOfExamples = 1000;
 			String fileName = FileLoader.getFilePath("symbolic_dataset");
 
 			// Generate data set first
-			GenerateRegressionDataset dataset = new GenerateRegressionDataset(fileName, numOfExamples, min, max);
+			GenerateRegressionDataset dataset = new GenerateRegressionDataset(fileName, min, max);
 
 			// Solve symbolic regression problem using Genetic Programming
 			GPConfiguration regressionConfig = new GPConfiguration();

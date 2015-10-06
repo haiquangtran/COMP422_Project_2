@@ -7,19 +7,19 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GenerateRegressionDataset {
 
-	public GenerateRegressionDataset(String fileName, int numOfexamples, int minValue, int maxValue) {
+	public GenerateRegressionDataset(String fileName, int minValue, int maxValue) {
 		// Generate data set to solve symbolic regression problem
-		generateDataSet(fileName, numOfexamples, minValue, maxValue);
+		generateDataSet(fileName, minValue, maxValue);
 	}
 
-	public void generateDataSet(String fileName, int numOfExamples, int minValue, int maxValue) {
+	public void generateDataSet(String fileName, int minValue, int maxValue) {
 		PrintWriter writer;
 		try {
 			writer = new PrintWriter(fileName, "UTF-8");
 
-			// How many lines in the file
-			for (int i = 0; i < numOfExamples; i++) {
-				double input = ThreadLocalRandom.current().nextInt(minValue, maxValue + 1);
+			// How many lines in the file (0 is inclusive)
+			for (int input = minValue; input <= maxValue; input++) {
+				//	double input = ThreadLocalRandom.current().nextInt(minValue, maxValue + 1);
 				double outputClass = regressionProblem(input);
 
 				// Generate data
