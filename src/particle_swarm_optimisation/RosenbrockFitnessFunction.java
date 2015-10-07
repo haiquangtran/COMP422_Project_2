@@ -1,19 +1,15 @@
 package particle_swarm_optimisation;
 
+import java.util.List;
+
 import net.sourceforge.jswarm_pso.FitnessFunction;
 
-public class RosenbrockFitnessFunction extends FitnessFunction {
+public class RosenbrockFitnessFunction extends Problem {
 
-	public RosenbrockFitnessFunction() {
-		super(false);
-	}
-
-	/**
-	 * Fitness function used to evaluate PSO
-	 */
-	public double evaluate(double dimension[]) {
-		// Rosenbrock's function
-		return rosenbrocksFunction(dimension);
+	@Override
+	public double fitness(List<Double> position) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	/**

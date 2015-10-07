@@ -1,19 +1,25 @@
 package particle_swarm_optimisation;
 
-import net.sourceforge.jswarm_pso.FitnessFunction;
+import java.util.List;
 
-public class GriewankFitnessFunction extends FitnessFunction {
 
-	public GriewankFitnessFunction() {
-		super(false);
-	}
+public class GriewankFitnessFunction extends Problem {
 
-	/**
-	 * Fitness function used to evaluate PSO
-	 */
-	public double evaluate(double dimension[]) {
-		// Griewank's function
-		return griewanksFunction(dimension);
+	@Override
+	public double fitness(List<Double> position) {
+		//		double sum1 = 0;
+		//        double sum2 = 0;
+		//        double fitness = 0;
+		//        for (int i = 0; i < position.size(); ++i) {
+		//            sum1 += position.get(i) * position.get(i);
+		//            sum2 += Math.cos(2 * Math.PI * position.get(i));
+		//        }
+		//        //m_dFitness
+		//        fitness = -20 * Math.exp(-0.2 * Math.sqrt((1.0 / position.size()) * sum1)) - Math.exp((1.0 / position.size()) * sum2) + 20 + Math.E;
+		//
+		//        return fitness;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	/**
