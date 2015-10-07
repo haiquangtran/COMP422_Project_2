@@ -19,7 +19,7 @@ import net.sourceforge.jswarm_pso.example_2.SwarmShow2D;
 public class ParticleSwarmOptimisation {
 
 	public void calculate(FitnessFunction fitnessFunction) {
-		System.out.println("Example of Particle Swarm Optimization: Optimizing by minimizing " +  fitnessFunction.toString() + "'s function.");
+		System.out.println("Example of Particle Swarm Optimization: Optimizing by minimizing " +  fitnessFunction.toString());
 
 		//Set dimensions
 		MyParticle.NUMBER_OF_DIMENTIONS = 20;

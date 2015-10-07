@@ -32,4 +32,9 @@ public class RosenbrockFitnessFunction extends FitnessFunction {
 		return rosenbrocks;
 	}
 
+	@Override
+	public String toString() {
+		return "Rosenbrock's function";
+	}
+
 }

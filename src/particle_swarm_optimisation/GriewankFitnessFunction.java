@@ -41,4 +41,9 @@ public class GriewankFitnessFunction extends FitnessFunction {
 		}
 		return griewanks;
 	}
+
+	@Override
+	public String toString() {
+		return "Griewank's function";
+	}
 }
