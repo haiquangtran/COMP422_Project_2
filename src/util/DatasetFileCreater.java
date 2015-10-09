@@ -112,4 +112,13 @@ public class DatasetFileCreater {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Returns number of features (excludes the class).
+	 * @return
+	 */
+	public int getNumberOfFeatures() {
+		return wholeDataset.get(0).split(",").length-1;
+	}
+
 }

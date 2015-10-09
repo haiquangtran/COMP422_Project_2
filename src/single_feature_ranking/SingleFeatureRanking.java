@@ -91,4 +91,5 @@ public abstract class SingleFeatureRanking {
 	public ArrayList<Feature> getFeatures() {
 		return features;
 	}
+
 }

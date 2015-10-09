@@ -33,10 +33,11 @@ public class Question_6 {
 		// Determines the training data size (percentage of the split from whole dataset)
 		double trainingSetPercent = 0.8;	//80%
 		int kFoldNumber = 10;
+		int topFeatureNumber = 5;
 
 		// Create training set and test set csv files
 		DatasetFileCreater dataLoader = new DatasetFileCreater(wbcd + fileType, wbcd+"_training.csv", wbcd+"_test.csv", trainingSetPercent);
-		//		DatasetFileCreater dataLoader = new DatasetFileCreater(sonar + fileType, sonar+"_training.csv", sonar+"_test.csv", trainingSetPercent);
+//				DatasetFileCreater dataLoader = new DatasetFileCreater(sonar + fileType, sonar+"_training.csv", sonar+"_test.csv", trainingSetPercent);
 
 		// Load training set and test set csv files
 		String trainingSet = dataLoader.getTrainingSetFileName();
@@ -46,11 +47,16 @@ public class Question_6 {
 		ChiSquaredRanking chiSquared = new ChiSquaredRanking(trainingSet, testSet);
 
 		// Get top n features
-		int[] infoGainFeatures = infoGain.getTopFeatureIndices(5);
-		int[] chiFeatures = chiSquared.getTopFeatureIndices(5);
+		int[] infoGainFeatures = infoGain.getTopFeatureIndices(topFeatureNumber);
+		int[] chiFeatures = chiSquared.getTopFeatureIndices(topFeatureNumber);
 
 		// Test on naive bayes
-		NaiveBayesAlgorithm naive = new NaiveBayesAlgorithm(kFoldNumber, infoGainFeatures, trainingSet, testSet);
+		System.out.println("================ Naive Bayes on All " + dataLoader.getNumberOfFeatures() + " Features ==============================");
+		NaiveBayesAlgorithm naive = new NaiveBayesAlgorithm(kFoldNumber, trainingSet, testSet);
+		System.out.println("================ Information Gain Ranked Top " + topFeatureNumber + " Features ======================");
+		NaiveBayesAlgorithm info = new NaiveBayesAlgorithm(kFoldNumber, infoGainFeatures, trainingSet, testSet);
+		System.out.println("================ Chi Squared Ranked Top " + topFeatureNumber + " Features ===========================");
+		NaiveBayesAlgorithm chi = new NaiveBayesAlgorithm(kFoldNumber, chiFeatures, trainingSet, testSet);
 	}
 
 }
