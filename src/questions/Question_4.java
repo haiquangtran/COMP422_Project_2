@@ -47,14 +47,14 @@ public class Question_4 {
 		int number_of_particles = 50;
 		int number_of_iterations = 1000;
 		int number_of_runs = 30;
-		int d = 50;
+		int d = 20;
 		double c1 = 1.49618;
 		double c2 = 1.49618;
 		double w = 0.7298;
 
 		Swarm s = new Swarm();
 
-		s.setProblem(griewank);
+		s.setProblem(rosenbrock);
 		s.setTopology(new StarTopology());
 		// s.setTopology(new RingTopology(4));
 
