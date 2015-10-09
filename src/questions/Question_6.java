@@ -2,9 +2,9 @@ package questions;
 
 
 import single_feature_ranking.ChiSquaredRanking;
-import single_feature_ranking.DatasetFileCreater;
 import single_feature_ranking.InformationGainRanking;
 import single_feature_ranking.SingleFeatureRanking;
+import util.DatasetFileCreater;
 import util.FileLoader;
 import weka.attributeSelection.ChiSquaredAttributeEval;
 

@@ -3,6 +3,8 @@ package questions;
 import java.awt.BorderLayout;
 import java.io.File;
 
+import util.DatasetFileCreater;
+import util.FileLoader;
 import weka.classifiers.Classifier;
 import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.trees.J48;
@@ -29,7 +31,18 @@ public class Question_5 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		String wine = FileLoader.getFilePath("wine");
+		String balance = FileLoader.getFilePath("balance");
+		String fileType = ".data";
 
+		int trainingSize = 500;
+
+		// Create training set and test set csv files
+		DatasetFileCreater dataLoader = new DatasetFileCreater(wine + fileType, wine+"_training.csv", wine+"_test.csv", trainingSize);
+		//		DatasetFileCreater dataLoader = new DatasetFileCreater(balance + fileType, balance+"_training.csv", balance+"_test.csv", trainingSize);
+		// Load training set and test set csv files
+		String trainingSet = dataLoader.getTrainingSetFileName();
+		String testSet = dataLoader.getTestSetFileName();
 	}
 
 }
