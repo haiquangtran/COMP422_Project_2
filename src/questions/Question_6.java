@@ -30,19 +30,12 @@ public class Question_6 {
 		String sonar = FileLoader.getFilePath("sonar");
 		String fileType = ".data";
 
-		// Max lines in files
-		final int SONAR_SIZE = 208;
-		final int WBCD_SIZE = 569;
-
 		// Determines the training data size (percentage of the split from whole dataset)
 		double trainingSetPercent = 0.8;
 
-		//		int trainingSize = (int) (WBCD_SIZE * trainingSetPercent);
-		int trainingSize = (int) (SONAR_SIZE * trainingSetPercent);
-
 		// Create training set and test set csv files
-		//		DatasetFileCreater dataLoader = new DatasetFileCreater(wbcd + fileType, wbcd+"_training.csv", wbcd+"_test.csv", trainingSize);
-		DatasetFileCreater dataLoader = new DatasetFileCreater(sonar + fileType, sonar+"_training.csv", sonar+"_test.csv", trainingSize);
+		//		DatasetFileCreater dataLoader = new DatasetFileCreater(wbcd + fileType, wbcd+"_training.csv", wbcd+"_test.csv", trainingSetPercent);
+		DatasetFileCreater dataLoader = new DatasetFileCreater(sonar + fileType, sonar+"_training.csv", sonar+"_test.csv", trainingSetPercent);
 
 		// Load training set and test set csv files
 		String trainingSet = dataLoader.getTrainingSetFileName();

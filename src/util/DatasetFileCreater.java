@@ -13,13 +13,20 @@ public class DatasetFileCreater {
 	private String testSetFileName;
 	private ArrayList<String> wholeDataset = new ArrayList<String>();
 
-	public DatasetFileCreater(String inputFileName, String outputTrainingSetName, String outputTestSetName, int trainingSize){
+	/**
+	 *
+	 * @param inputFileName
+	 * @param outputTrainingSetName
+	 * @param outputTestSetName
+	 * @param trainingSetPercentage how many percentage of instances you want in the training set. (0.0 represents 0% to 1.0 represents 100%)
+	 */
+	public DatasetFileCreater(String inputFileName, String outputTrainingSetName, String outputTestSetName, double trainingSetPercentage){
 		this.trainingSetFileName = outputTrainingSetName;
 		this.testSetFileName = outputTestSetName;
 
 		// Create training and test set files
 		loadFileIntoArray(inputFileName);
-		createDatasets(trainingSetFileName, testSetFileName, trainingSize);
+		createDatasets(trainingSetFileName, testSetFileName, trainingSetPercentage);
 	}
 
 	private void writeHeaderInfo(PrintWriter writer, int numOfFeatures) {
@@ -41,7 +48,6 @@ public class DatasetFileCreater {
 			while ((line = br.readLine()) != null) {
 				String[] contents = line.split(",");
 				int classIndex = contents.length-1;
-				int featureSize = contents.length-1;
 				String featureClass = "class-" + contents[classIndex];
 
 				// features
@@ -72,12 +78,14 @@ public class DatasetFileCreater {
 	 * Randomizes the ordering and creates a training dataset and a test dataset
 	 * in a format acceptable for weka (CSV file).
 	 */
-	public void createDatasets(String trainingSetFileName, String testSetFileName, int numOfTrainingInstances) {
+	public void createDatasets(String trainingSetFileName, String testSetFileName, double trainingSetPercentage) {
 		// Add random seed to randomize the ordering of training set and test set
 		Random random = new Random(1);
 		// Randomize the array
 		Collections.shuffle(wholeDataset, random);
 		int featureSize = wholeDataset.get(0).split(",").length-1;
+		int numOfTrainingInstances = (int) (wholeDataset.size() * trainingSetPercentage);
+		System.out.println("Feature Size: " + featureSize + "  whoel dataset: " + wholeDataset.size());
 
 		try {
 			// Dataset Ouput files
@@ -91,7 +99,7 @@ public class DatasetFileCreater {
 					writeHeaderInfo(testWriter, featureSize);
 				}
 
-				// Create datasets
+				// Create datasets (csv files)
 				if (i < numOfTrainingInstances) {
 					trainingWriter.write(wholeDataset.get(i));
 					trainingWriter.flush();
@@ -100,6 +108,7 @@ public class DatasetFileCreater {
 					testWriter.flush();
 				}
 			}
+
 		} catch (Exception e){
 			e.printStackTrace();
 		}

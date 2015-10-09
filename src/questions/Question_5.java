@@ -38,26 +38,20 @@ public class Question_5 {
 		String balance = FileLoader.getFilePath("balance");
 		String fileType = ".data";
 
-		// Max lines in files
-		final int BALANCE_SIZE = 625;
-		final int WINE_SIZE = 178;
-
 		// Settings
 		int kFoldNumber = 10;
 		// Determines the training data size (percentage of the split from whole dataset)
-		double trainingSetPercent = 1.0;
-
-		//		int trainingSize = (int) (WINE_SIZE * trainingSetPercent);
-		int trainingSize = (int) (BALANCE_SIZE * trainingSetPercent);
+		double trainingSetPercent = 1.0; //100%
 
 		// Create training set and test set csv files
-		//		DatasetFileCreater dataLoader = new DatasetFileCreater(wine + fileType, wine+"_training.csv", wine+"_test.csv", trainingSize);
-		DatasetFileCreater dataLoader = new DatasetFileCreater(balance + fileType, balance+"_training.csv", balance+"_test.csv", trainingSize);
+//				DatasetFileCreater dataLoader = new DatasetFileCreater(wine + fileType, wine+"_training.csv", wine+"_test.csv", trainingSetPercent);
+		DatasetFileCreater dataLoader = new DatasetFileCreater(balance + fileType, balance+"_training.csv", balance+"_test.csv", trainingSetPercent);
 
 		// Load training set and test set csv files
 		String trainingSet = dataLoader.getTrainingSetFileName();
 		String testSet = dataLoader.getTestSetFileName();
 
+		// Cross validation on the training set (no need for test set)
 		NaiveBayesAlgorithm naive = new NaiveBayesAlgorithm(kFoldNumber, trainingSet, trainingSet);
 		DecisionTreeC4_5 c4 = new DecisionTreeC4_5(kFoldNumber, trainingSet, trainingSet);
 	}
