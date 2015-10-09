@@ -3,6 +3,8 @@ package questions;
 import java.awt.BorderLayout;
 import java.io.File;
 
+import decision_tree.DecisionTreeC4_5;
+import naive_bayes.NaiveBayesAlgorithm;
 import util.DatasetFileCreater;
 import util.FileLoader;
 import weka.classifiers.Classifier;
@@ -19,7 +21,7 @@ public class Question_5 {
 
 	/**
 	 * First apply the naive Bayes and Decision Tree (C4.5) classifiers to the Balance Scale and
-	 * Wine Recognition datasets and measure the classification performance using 10-fold crossvalidation.
+	 * Wine Recognition datasets and measure the classification performance using 10-fold cross validation.
 	 * Then develop a GP-based feature construction algorithm to construct features for
 	 * the two problems. Feed the constructed features to these classifiers and report changes in
 	 * their performance. Consider the following points:
@@ -31,18 +33,30 @@ public class Question_5 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		// Files
 		String wine = FileLoader.getFilePath("wine");
 		String balance = FileLoader.getFilePath("balance");
 		String fileType = ".data";
 
-		int trainingSize = 500;
+		// Max lines in files
+		final int BALANCE_SIZE = 625;
+		final int WINE_SIZE = 178;
+
+		int kFoldNumber = 10;
+
+		int trainingSize = (int) (WINE_SIZE);
+		//		int trainingSize = (int) (BALANCE_SIZE * 0.8);
 
 		// Create training set and test set csv files
 		DatasetFileCreater dataLoader = new DatasetFileCreater(wine + fileType, wine+"_training.csv", wine+"_test.csv", trainingSize);
-		//		DatasetFileCreater dataLoader = new DatasetFileCreater(balance + fileType, balance+"_training.csv", balance+"_test.csv", trainingSize);
+		//				DatasetFileCreater dataLoader = new DatasetFileCreater(balance + fileType, balance+"_training.csv", balance+"_test.csv", trainingSize);
+
 		// Load training set and test set csv files
 		String trainingSet = dataLoader.getTrainingSetFileName();
 		String testSet = dataLoader.getTestSetFileName();
+
+		NaiveBayesAlgorithm naive = new NaiveBayesAlgorithm(kFoldNumber, trainingSet, trainingSet);
+		DecisionTreeC4_5 c4 = new DecisionTreeC4_5(kFoldNumber, trainingSet, trainingSet);
 	}
 
 }

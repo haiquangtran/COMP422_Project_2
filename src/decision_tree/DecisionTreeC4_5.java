@@ -1,6 +1,8 @@
 package decision_tree;
 
 import java.awt.BorderLayout;
+import java.io.File;
+import java.util.Random;
 
 import weka.classifiers.Classifier;
 import weka.classifiers.evaluation.Evaluation;
@@ -11,24 +13,24 @@ import weka.gui.treevisualizer.PlaceNode2;
 import weka.gui.treevisualizer.TreeVisualizer;
 
 public class DecisionTreeC4_5 {
+	private String trainingFileName;
+	private String testFileName;
 
-	public static void main(String[] args) {
+	public DecisionTreeC4_5(int kFoldNumber, String trainingFileName, String testFileName) {
+		this.trainingFileName = trainingFileName;
+		this.testFileName = testFileName;
 		//classify using J48 Decision Tree
-		runJ48DecisionTree();
+		runJ48DecisionTree(kFoldNumber);
 	}
 
-	private static void runJ48DecisionTree() {
-		//Create features
-//		String trainingFile = ImageHelper.TRAINING_CSV_Q3;
-//		String testFile = ImageHelper.TEST_CSV_Q3;
-
+	private void runJ48DecisionTree(int kFoldNumber) {
 		//load CSV
 		CSVLoader loaderTrain = new CSVLoader();
 		CSVLoader loaderTest = new CSVLoader();
 
 		try {
-//			loaderTrain.setSource(new File(trainingFile));
-//			loaderTest.setSource(new File(testFile));
+			loaderTrain.setSource(new File(trainingFileName));
+			loaderTest.setSource(new File(testFileName));
 
 			//Set training set from CSV file
 			Instances trainingSet = loaderTrain.getDataSet();
@@ -43,7 +45,8 @@ public class DecisionTreeC4_5 {
 
 			//Test the model
 			Evaluation eval = new Evaluation(trainingSet);
-			eval.evaluateModel(decisionTree, trainingSet);
+			//			eval.evaluateModel(decisionTree, testSet);
+			eval.crossValidateModel(decisionTree, testSet, kFoldNumber, new Random(1));
 
 			//Print the result
 			String result = eval.toSummaryString();

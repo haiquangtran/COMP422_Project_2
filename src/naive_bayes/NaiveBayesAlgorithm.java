@@ -2,6 +2,7 @@ package naive_bayes;
 
 import java.awt.BorderLayout;
 import java.io.File;
+import java.util.Random;
 
 import weka.classifiers.Classifier;
 import weka.classifiers.bayes.NaiveBayes;
@@ -14,21 +15,25 @@ import weka.gui.visualize.PlotData2D;
 import weka.gui.visualize.ThresholdVisualizePanel;
 
 public class NaiveBayesAlgorithm {
+	private String trainingFileName;
+	private String testFileName;
 
-	public static void main(String[] args) {
+	public NaiveBayesAlgorithm(int kFoldNumber, String trainingFileName, String testFileName) {
+		this.trainingFileName = trainingFileName;
+		this.testFileName = testFileName;
 		//Use features extracted on naive bayes
-		runNaiveBayes();
+		runNaiveBayes(kFoldNumber);
 	}
 
-	private static void runNaiveBayes() {
+	private void runNaiveBayes(int kFoldNumber) {
 
 		//load CSV
 		CSVLoader loaderTrain = new CSVLoader();
 		CSVLoader loaderTest = new CSVLoader();
 
 		try {
-//			loaderTrain.setSource(new File(trainingFile));
-//			loaderTest.setSource(new File(testFile));
+			loaderTrain.setSource(new File(trainingFileName));
+			loaderTest.setSource(new File(testFileName));
 
 			//Set training set from CSV file
 			Instances trainingSet = loaderTrain.getDataSet();
@@ -43,8 +48,8 @@ public class NaiveBayesAlgorithm {
 
 			//Test the model
 			Evaluation eval = new Evaluation(trainingSet);
-			eval.evaluateModel(naiveBayes, testSet);
-			//			eval.crossValidateModel(naiveBayes, testSet, 10, new Random(1));
+//			eval.evaluateModel(naiveBayes, testSet);
+			eval.crossValidateModel(naiveBayes, testSet, kFoldNumber, new Random(1));
 
 			//Print the result
 			String result = eval.toSummaryString();
