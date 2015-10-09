@@ -32,6 +32,9 @@ public class DatasetFileCreater {
 		String line;
 		int lineCount = 0;
 
+		//TODO: add random seed to randomize the ordering of training set and test set
+
+
 		try {
 			// Dataset Ouput files
 			PrintWriter trainingWriter = new PrintWriter(trainingFileName);
