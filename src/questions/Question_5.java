@@ -42,14 +42,17 @@ public class Question_5 {
 		final int BALANCE_SIZE = 625;
 		final int WINE_SIZE = 178;
 
+		// Settings
 		int kFoldNumber = 10;
+		// Determines the training data size (percentage of the split from whole dataset)
+		double trainingSetPercent = 1.0;
 
-		int trainingSize = (int) (WINE_SIZE);
-		//		int trainingSize = (int) (BALANCE_SIZE * 0.8);
+		//		int trainingSize = (int) (WINE_SIZE * trainingSetPercent);
+		int trainingSize = (int) (BALANCE_SIZE * trainingSetPercent);
 
 		// Create training set and test set csv files
-		DatasetFileCreater dataLoader = new DatasetFileCreater(wine + fileType, wine+"_training.csv", wine+"_test.csv", trainingSize);
-		//				DatasetFileCreater dataLoader = new DatasetFileCreater(balance + fileType, balance+"_training.csv", balance+"_test.csv", trainingSize);
+		//		DatasetFileCreater dataLoader = new DatasetFileCreater(wine + fileType, wine+"_training.csv", wine+"_test.csv", trainingSize);
+		DatasetFileCreater dataLoader = new DatasetFileCreater(balance + fileType, balance+"_training.csv", balance+"_test.csv", trainingSize);
 
 		// Load training set and test set csv files
 		String trainingSet = dataLoader.getTrainingSetFileName();
