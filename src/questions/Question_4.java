@@ -10,6 +10,7 @@ import particle_swarm_optimisation.GriewankFitnessFunction;
 import particle_swarm_optimisation.NewMath;
 import particle_swarm_optimisation.Particle;
 import particle_swarm_optimisation.Problem;
+import particle_swarm_optimisation.RingTopology;
 import particle_swarm_optimisation.RosenbrockFitnessFunction;
 import particle_swarm_optimisation.StarTopology;
 import particle_swarm_optimisation.Swarm;
@@ -39,27 +40,33 @@ public class Question_4 {
 		Problem rosenbrock = new RosenbrockFitnessFunction();
 		Problem griewank = new GriewankFitnessFunction();
 
-		int number_of_particles = 30;
-		int number_of_iterations = 100;
-		int number_of_runs = 10;
+		// Minimize
+		rosenbrock.setMinimization(true);
+		griewank.setMinimization(true);
+
+		int number_of_particles = 50;
+		int number_of_iterations = 1000;
+		int number_of_runs = 30;
+		int d = 50;
 		double c1 = 1.49618;
 		double c2 = 1.49618;
+		double w = 0.7298;
 
 		Swarm s = new Swarm();
 
-		s.setProblem(rosenbrock);
+		s.setProblem(griewank);
 		s.setTopology(new StarTopology());
-		//  s.setTopology(new RingTopology(4));
+		// s.setTopology(new RingTopology(4));
 
 		s.setVelocityClamp(new BasicVelocityClamp());
 
 		for (int i = 0; i < number_of_particles; ++i) {
 			Particle p = new Particle();
-			p.setSize(20);
+			p.setSize(d);
 			p.setC1(c1);
 			p.setC2(c2);
 
-			p.setInertia(0.7298);
+			p.setInertia(w);
 			s.addParticle(p);
 		}
 
@@ -68,9 +75,9 @@ public class Question_4 {
 		 */
 		/** Save the results
 		 */
-		double Fitness_Runs_Iterations[][] = new double[number_of_runs][number_of_iterations]; // get bestfitnes in each iterate in each run
+		double Fitness_Runs_Iterations[][] = new double[number_of_runs][number_of_iterations]; // get bestfitness in each iterate in each run
 		double AverageFitnessRuns[] = new double[number_of_iterations]; // average best fitness in each iterate in all runs
-		double BestFitnessRuns[] = new double[number_of_runs];    // final get bestfitnes in each run
+		double BestFitnessRuns[] = new double[number_of_runs];    // final get best fitness in each run
 		/** start PSO
 		 */
 		for (int r = 0; r < number_of_runs; ++r) {
@@ -82,7 +89,7 @@ public class Question_4 {
 				// System.out.println("Average=" + NewMath.Averageitera(s));
 
 				/**
-				 *  // get bestfitnes in every iterate for different topology except star
+				 *  // get bestfitness in every iterate for different topology except star
 				 */
 				Particle best_particle = null;
 				double best_fitness = s.getProblem().getWorstFitness();
@@ -95,18 +102,18 @@ public class Question_4 {
 				Fitness_Runs_Iterations[r][i] = best_fitness;
 				// BestFitnessIterations[i] = best_fitness;
 				/**
-				 *  // get bestfitnes in each iterate
+				 *  // get bestfitness in each iterate
 				 */
 			}//end all iterations
 
 			BestFitnessRuns[r] = Fitness_Runs_Iterations[r][number_of_iterations - 1];
 			/**
-			 *  // get bestfitnes in each run
+			 *  // get best fitness in each run
 			 */
 		}//end all runs
 
 
-		// get bestfitnes from final bestfitnes in all runs
+		// get best fitness from final best fitness in all runs
 		double Bestbest_fitness = s.getProblem().getWorstFitness();
 		int bestrun = 0;
 		for (int r = 0; r < number_of_runs; ++r) {
@@ -116,10 +123,10 @@ public class Question_4 {
 				// best_particle = s.getParticle(j);
 			}
 		}
-		System.out.println(bestrun);
-		System.out.println("Best result of " + number_of_runs + " runs is:" + Bestbest_fitness);
-		System.out.println("Average of best results of " + number_of_runs + " runs is:" + NewMath.Best_Mean_STD(BestFitnessRuns)[0]);
-		System.out.println("Standard Deviation of best results of " + number_of_runs + " runs is:" + NewMath.Best_Mean_STD(BestFitnessRuns)[1]);
+		System.out.println("Best Run: " + bestrun);
+		System.out.println("Best result of " + number_of_runs + " runs is: " + Bestbest_fitness);
+		System.out.println("Average of best results of " + number_of_runs + " runs is: " + NewMath.Best_Mean_STD(BestFitnessRuns)[0]);
+		System.out.println("Standard Deviation of best results of " + number_of_runs + " runs is: " + NewMath.Best_Mean_STD(BestFitnessRuns)[1]);
 
 		AverageFitnessRuns = NewMath.AverageRunIterations(Fitness_Runs_Iterations);  // average best fitness in each iterate in all runs
 

@@ -5,6 +5,12 @@ import java.util.List;
 
 public class GriewankFitnessFunction extends Problem {
 
+	public GriewankFitnessFunction() {
+		setMinimization(true);
+		setMinDomain(-30);
+		setMaxDomain(30);
+	}
+
 	@Override
 	public double fitness(List<Double> position) {
 		// Use griwank's function as the fitness function.

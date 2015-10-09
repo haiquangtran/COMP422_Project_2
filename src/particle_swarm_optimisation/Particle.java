@@ -13,7 +13,6 @@ import java.util.Random;
  * @author xuebing
  */
 public class Particle {
-
     private List<Double> _position = new ArrayList<Double>();
     private List<Double> _velocity = new ArrayList<Double>();
     private double _fitness;

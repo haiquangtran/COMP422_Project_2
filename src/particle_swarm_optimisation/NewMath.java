@@ -57,7 +57,6 @@ public class NewMath {
         for (Double Array : Arrays) {
             allSquare += (Array - Mean) * (Array - Mean);
         }
-        // (xi - x(平均)的平方 的和计算完毕
         double denominator = Arrays.length;
         return Math.sqrt(allSquare / denominator);
     }
