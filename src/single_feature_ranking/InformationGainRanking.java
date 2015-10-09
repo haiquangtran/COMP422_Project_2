@@ -59,7 +59,7 @@ public class InformationGainRanking extends SingleFeatureRanking {
 			for (int i = 0; i < trainingSet.numAttributes(); i++) {
 				Attribute attr = trainingSet.attribute(i);
 				double infoGain  = evaluation.evaluateAttribute(i);
-				this.getFeatures().add(new Feature(attr, infoGain));
+				this.getFeatures().add(new Feature(attr, i, infoGain));
 			}
 
 			// sort features by descending order of score

@@ -8,9 +8,11 @@ import weka.classifiers.Classifier;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.evaluation.ThresholdCurve;
+import weka.classifiers.meta.FilteredClassifier;
 import weka.core.Instances;
 import weka.core.Utils;
 import weka.core.converters.CSVLoader;
+import weka.filters.unsupervised.attribute.Remove;
 import weka.gui.visualize.PlotData2D;
 import weka.gui.visualize.ThresholdVisualizePanel;
 
@@ -21,11 +23,19 @@ public class NaiveBayesAlgorithm {
 	public NaiveBayesAlgorithm(int kFoldNumber, String trainingFileName, String testFileName) {
 		this.trainingFileName = trainingFileName;
 		this.testFileName = testFileName;
-		//Use features extracted on naive bayes
-		runNaiveBayes(kFoldNumber);
+		// Use features extracted on naive bayes
+		runNaiveBayes(kFoldNumber, null);
 	}
 
-	private void runNaiveBayes(int kFoldNumber) {
+	public NaiveBayesAlgorithm(int kFoldNumber, int[] attributesKept, String trainingFileName, String testFileName) {
+		this.trainingFileName = trainingFileName;
+		this.testFileName = testFileName;
+
+		// Use features extracted on naive bayes
+		runNaiveBayes(kFoldNumber, attributesKept);
+	}
+
+	private void runNaiveBayes(int kFoldNumber, int[] attributesKept) {
 
 		//load CSV
 		CSVLoader loaderTrain = new CSVLoader();
@@ -42,14 +52,28 @@ public class NaiveBayesAlgorithm {
 			Instances testSet = loaderTest.getDataSet();
 			testSet.setClassIndex(testSet.numAttributes()-1);
 
+			// Filter Attributes
+			Remove filteredAttributes = new Remove();
+			// Use subset of attributes
+			if (attributesKept != null) {
+				filteredAttributes.setInvertSelection(true);
+				// add class attribute
+				attributesKept[attributesKept.length-1] = trainingSet.numAttributes()-1;
+				filteredAttributes.setAttributeIndicesArray(attributesKept);
+			}
+
 			//Create a naive bayes classifier
 			Classifier naiveBayes = (Classifier) new NaiveBayes();
-			naiveBayes.buildClassifier(trainingSet);
+
+			FilteredClassifier filteredNaive = new FilteredClassifier();
+			filteredNaive.setFilter(filteredAttributes);
+			filteredNaive.setClassifier(naiveBayes);
+			filteredNaive.buildClassifier(trainingSet);
 
 			//Test the model
 			Evaluation eval = new Evaluation(trainingSet);
 			//			eval.evaluateModel(naiveBayes, testSet);
-			eval.crossValidateModel(naiveBayes, testSet, kFoldNumber, new Random(1));
+			eval.crossValidateModel(filteredNaive, testSet, kFoldNumber, new Random(1));
 
 			//Print the result
 			String result = eval.toSummaryString();

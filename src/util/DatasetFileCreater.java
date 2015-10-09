@@ -78,14 +78,13 @@ public class DatasetFileCreater {
 	 * Randomizes the ordering and creates a training dataset and a test dataset
 	 * in a format acceptable for weka (CSV file).
 	 */
-	public void createDatasets(String trainingSetFileName, String testSetFileName, double trainingSetPercentage) {
+	private void createDatasets(String trainingSetFileName, String testSetFileName, double trainingSetPercentage) {
 		// Add random seed to randomize the ordering of training set and test set
 		Random random = new Random(1);
 		// Randomize the array
 		Collections.shuffle(wholeDataset, random);
 		int featureSize = wholeDataset.get(0).split(",").length-1;
 		int numOfTrainingInstances = (int) (wholeDataset.size() * trainingSetPercentage);
-		System.out.println("Feature Size: " + featureSize + "  whoel dataset: " + wholeDataset.size());
 
 		try {
 			// Dataset Ouput files
@@ -112,6 +111,5 @@ public class DatasetFileCreater {
 		} catch (Exception e){
 			e.printStackTrace();
 		}
-
 	}
 }

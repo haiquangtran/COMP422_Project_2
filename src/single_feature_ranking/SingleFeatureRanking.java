@@ -25,6 +25,7 @@ public abstract class SingleFeatureRanking {
 		this.trainingSetFileName = trainingSetFileName;
 		this.testSetFileName = testSetFileName;
 		this.features = new ArrayList<Feature>();
+
 		// Load datasets for weka
 		loadDataSets();
 	}
@@ -54,6 +55,18 @@ public abstract class SingleFeatureRanking {
 
 		for (int i = 0; i < num; i++) {
 			topFeatures[i] = this.getFeatures().get(i);
+		}
+
+		return topFeatures;
+	}
+
+	public int[] getTopFeatureIndices(int num) {
+		// + 1 is for the addition of the class attribute
+		// NOTE: you need to set the last value of this array to be hte class attribute index.
+		int[] topFeatures = new int[num+1];
+
+		for (int i = 0; i < num; i++) {
+			topFeatures[i] = this.getFeatures().get(i).getAttributeIndex();
 		}
 
 		return topFeatures;

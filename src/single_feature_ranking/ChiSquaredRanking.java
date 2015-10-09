@@ -58,7 +58,7 @@ public class ChiSquaredRanking extends SingleFeatureRanking {
 			for (int i = 0; i < trainingSet.numAttributes(); i++) {
 				Attribute attr = trainingSet.attribute(i);
 				double chiSquared  = evaluation.evaluateAttribute(i);
-				this.getFeatures().add(new Feature(attr, chiSquared));
+				this.getFeatures().add(new Feature(attr, i, chiSquared));
 			}
 
 			// sort features by descending order of score

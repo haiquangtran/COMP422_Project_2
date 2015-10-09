@@ -4,10 +4,12 @@ import weka.core.Attribute;
 
 public class Feature {
 	private Attribute attribute;
+	private int attributeIndex;
 	private double score;
 
-	public Feature(Attribute attribute, double score) {
+	public Feature(Attribute attribute, int attributeIndex, double score) {
 		this.attribute = attribute;
+		this.attributeIndex = attributeIndex;
 		this.score = score;
 	}
 
@@ -17,6 +19,10 @@ public class Feature {
 
 	public double getScore() {
 		return score;
+	}
+
+	public int getAttributeIndex(){
+		return attributeIndex;
 	}
 
 	public int compareTo(Feature other) {

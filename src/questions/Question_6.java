@@ -31,11 +31,12 @@ public class Question_6 {
 		String fileType = ".data";
 
 		// Determines the training data size (percentage of the split from whole dataset)
-		double trainingSetPercent = 0.8;
+		double trainingSetPercent = 0.8;	//80%
+		int kFoldNumber = 10;
 
 		// Create training set and test set csv files
-		//		DatasetFileCreater dataLoader = new DatasetFileCreater(wbcd + fileType, wbcd+"_training.csv", wbcd+"_test.csv", trainingSetPercent);
-		DatasetFileCreater dataLoader = new DatasetFileCreater(sonar + fileType, sonar+"_training.csv", sonar+"_test.csv", trainingSetPercent);
+		DatasetFileCreater dataLoader = new DatasetFileCreater(wbcd + fileType, wbcd+"_training.csv", wbcd+"_test.csv", trainingSetPercent);
+		//		DatasetFileCreater dataLoader = new DatasetFileCreater(sonar + fileType, sonar+"_training.csv", sonar+"_test.csv", trainingSetPercent);
 
 		// Load training set and test set csv files
 		String trainingSet = dataLoader.getTrainingSetFileName();
@@ -45,13 +46,11 @@ public class Question_6 {
 		ChiSquaredRanking chiSquared = new ChiSquaredRanking(trainingSet, testSet);
 
 		// Get top n features
-		Feature[] infoGainFeatures = infoGain.getTopFeatures(20);
-		Feature[] chiFeatures = chiSquared.getTopFeatures(20);
-
-		// Write to csv file for weka
+		int[] infoGainFeatures = infoGain.getTopFeatureIndices(5);
+		int[] chiFeatures = chiSquared.getTopFeatureIndices(5);
 
 		// Test on naive bayes
-		NaiveBayesAlgorithm naive = new NaiveBayesAlgorithm(10, trainingSet, testSet);
+		NaiveBayesAlgorithm naive = new NaiveBayesAlgorithm(kFoldNumber, infoGainFeatures, trainingSet, testSet);
 	}
 
 }
