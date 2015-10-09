@@ -53,10 +53,10 @@ public class DecisionTreeC4_5 {
 			System.out.println(result);
 
 			//Print the confusion matrix
-			System.out.println(eval.toMatrixString());
+			//			System.out.println(eval.toMatrixString());
 
 			//Display tree
-			displayDecisionTree(decisionTree);
+			//			displayDecisionTree(decisionTree);
 
 		} catch (Exception e) {
 			e.printStackTrace();

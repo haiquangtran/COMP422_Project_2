@@ -48,7 +48,7 @@ public class NaiveBayesAlgorithm {
 
 			//Test the model
 			Evaluation eval = new Evaluation(trainingSet);
-//			eval.evaluateModel(naiveBayes, testSet);
+			//			eval.evaluateModel(naiveBayes, testSet);
 			eval.crossValidateModel(naiveBayes, testSet, kFoldNumber, new Random(1));
 
 			//Print the result
@@ -56,7 +56,7 @@ public class NaiveBayesAlgorithm {
 			System.out.println(result);
 
 			//Generate ROC curve
-			generateROC(eval);
+			//			generateROC(eval);
 
 		} catch (Exception e) {
 			e.printStackTrace();
