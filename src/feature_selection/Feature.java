@@ -1,4 +1,4 @@
-package single_feature_ranking;
+package feature_selection;
 
 import weka.core.Attribute;
 

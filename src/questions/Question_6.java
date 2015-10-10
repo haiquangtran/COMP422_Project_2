@@ -1,11 +1,12 @@
 package questions;
 
 
+import feature_selection.ChiSquaredRanking;
+import feature_selection.Feature;
+import feature_selection.InformationGainRanking;
+import feature_selection.NaiveBayesWrapper;
+import feature_selection.SingleFeatureRanking;
 import naive_bayes.NaiveBayesAlgorithm;
-import single_feature_ranking.ChiSquaredRanking;
-import single_feature_ranking.Feature;
-import single_feature_ranking.InformationGainRanking;
-import single_feature_ranking.SingleFeatureRanking;
 import util.DatasetFileCreater;
 import util.FileLoader;
 import weka.attributeSelection.ChiSquaredAttributeEval;
@@ -57,6 +58,11 @@ public class Question_6 {
 		NaiveBayesAlgorithm info = new NaiveBayesAlgorithm(kFoldNumber, infoGainFeatures, trainingSet, testSet);
 		System.out.println("================ Chi Squared Ranked Top " + topFeatureNumber + " Features ===========================");
 		NaiveBayesAlgorithm chi = new NaiveBayesAlgorithm(kFoldNumber, chiFeatures, trainingSet, testSet);
+
+
+		// Wrapper Approach
+		NaiveBayesWrapper wrapper = new NaiveBayesWrapper(kFoldNumber, trainingSet);
+
 	}
 
 }
