@@ -1,7 +1,15 @@
 package questions;
 
+import feature_construction.GeneticProgramming;
+import genetic_programming.GenerateRegressionDataset;
+import genetic_programming.SymbolicRegression;
+
 import java.awt.BorderLayout;
 import java.io.File;
+
+import org.jgap.InvalidConfigurationException;
+import org.jgap.gp.IGPProgram;
+import org.jgap.gp.impl.GPConfiguration;
 
 import decision_tree.DecisionTreeC4_5;
 import naive_bayes.NaiveBayesAlgorithm;
@@ -37,23 +45,51 @@ public class Question_5 {
 		String wine = FileLoader.getFilePath("wine");
 		String balance = FileLoader.getFilePath("balance");
 		String fileType = ".data";
-
+		// Config files
+		String wineConfig = FileLoader.getFilePath("wine.conf");
+		String balanceConfig = FileLoader.getFilePath("balance.conf");
 		// Settings
 		int kFoldNumber = 10;
 		// Determines the training data size (percentage of the split from whole dataset)
-		double trainingSetPercent = 1.0; //100%
+		double trainingSetPercent = 0.8; //100%
 
 		// Create training set and test set csv files
-//				DatasetFileCreater dataLoader = new DatasetFileCreater(wine + fileType, wine+"_training.csv", wine+"_test.csv", trainingSetPercent);
+		//		DatasetFileCreater dataLoader = new DatasetFileCreater(wine + fileType, wine+"_training.csv", wine+"_test.csv", trainingSetPercent);
 		DatasetFileCreater dataLoader = new DatasetFileCreater(balance + fileType, balance+"_training.csv", balance+"_test.csv", trainingSetPercent);
 
 		// Load training set and test set csv files
 		String trainingSet = dataLoader.getTrainingSetFileName();
 		String testSet = dataLoader.getTestSetFileName();
 
-		// Cross validation on the training set (no need for test set)
-		NaiveBayesAlgorithm naive = new NaiveBayesAlgorithm(kFoldNumber, trainingSet, trainingSet);
-		DecisionTreeC4_5 c4 = new DecisionTreeC4_5(kFoldNumber, trainingSet, trainingSet);
+		// Evaluate on naive and c4.5
+		//		evaluation(kFoldNumber, trainingSet, trainingSet);
+
+		constructFeatures(balanceConfig, testSet);
 	}
 
+	private static void constructFeatures(String configFilePath, String testSetFileName) {
+		try {
+			// Solve symbolic regression problem using Genetic Programming
+			GPConfiguration config = new GPConfiguration();
+			GeneticProgramming constructFeatures = new GeneticProgramming(config);
+			String[] mainArgs = {configFilePath};
+
+			try {
+				IGPProgram best = constructFeatures.main(mainArgs);
+				constructFeatures.constructFeatures(best, testSetFileName);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} catch (InvalidConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private static void evaluation(int kFoldNumber, String trainingSet, String testSet) {
+		// Cross validation on the training set (no need for test set)
+		NaiveBayesAlgorithm naive = new NaiveBayesAlgorithm(kFoldNumber, trainingSet, testSet);
+		DecisionTreeC4_5 c4 = new DecisionTreeC4_5(kFoldNumber, trainingSet, testSet);
+	}
 }
