@@ -36,7 +36,6 @@ public class NaiveBayesAlgorithm {
 	}
 
 	private void runNaiveBayes(int kFoldNumber, int[] attributesKept) {
-
 		//load CSV
 		CSVLoader loaderTrain = new CSVLoader();
 		CSVLoader loaderTest = new CSVLoader();

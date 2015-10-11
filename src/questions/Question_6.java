@@ -38,7 +38,7 @@ public class Question_6 {
 
 		// Create training set and test set csv files
 		DatasetFileCreater dataLoader = new DatasetFileCreater(wbcd + fileType, wbcd+"_training.csv", wbcd+"_test.csv", trainingSetPercent);
-//				DatasetFileCreater dataLoader = new DatasetFileCreater(sonar + fileType, sonar+"_training.csv", sonar+"_test.csv", trainingSetPercent);
+		//		DatasetFileCreater dataLoader = new DatasetFileCreater(sonar + fileType, sonar+"_training.csv", sonar+"_test.csv", trainingSetPercent);
 
 		// Load training set and test set csv files
 		String trainingSet = dataLoader.getTrainingSetFileName();
@@ -59,10 +59,8 @@ public class Question_6 {
 		System.out.println("================ Chi Squared Ranked Top " + topFeatureNumber + " Features ===========================");
 		NaiveBayesAlgorithm chi = new NaiveBayesAlgorithm(kFoldNumber, chiFeatures, trainingSet, testSet);
 
-
 		// Wrapper Approach
-		NaiveBayesWrapper wrapper = new NaiveBayesWrapper(kFoldNumber, trainingSet);
-
+		NaiveBayesWrapper wrapper = new NaiveBayesWrapper(kFoldNumber, trainingSet, testSet);
 	}
 
 }
