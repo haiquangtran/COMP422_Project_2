@@ -20,6 +20,8 @@ import org.jgap.gp.impl.*;
 import org.jgap.gp.terminal.*;
 import org.jgap.util.*;
 
+import weka.core.Instances;
+import weka.core.converters.CSVLoader;
 import examples.gp.symbolicRegression.*;
 
 /*
@@ -332,24 +334,24 @@ extends GPProblem {
 				lineCount++;
 				str = str.trim();
 
-					// Read the data rows
-					// ------------------
-					String[] dataRowStr = str.split("[\\s,]+");
-					int len = dataRowStr.length;
-					Double[] dataRow = new Double[len];
-					for (int i = 0; i < len; i++) {
-						if (dataRowStr[i].equals("class-1")) {
-							dataRow[i] = Double.parseDouble("1");
-						} else if (dataRowStr[i].equals("class-2")) {
-							dataRow[i] = Double.parseDouble("2");
-						} else if (dataRowStr[i].equals("class-3")) {
-							dataRow[i] = Double.parseDouble("3");
-						} else {
-							System.out.println("dataRowStr[i] " + dataRowStr[i]);
-							dataRow[i] = Double.parseDouble(dataRowStr[i]);
-						}
+				// Read the data rows
+				// ------------------
+				String[] dataRowStr = str.split("[\\s,]+");
+				int len = dataRowStr.length;
+				Double[] dataRow = new Double[len];
+				for (int i = 0; i < len; i++) {
+					if (dataRowStr[i].equals("class-1")) {
+						dataRow[i] = Double.parseDouble("1");
+					} else if (dataRowStr[i].equals("class-2")) {
+						dataRow[i] = Double.parseDouble("2");
+					} else if (dataRowStr[i].equals("class-3")) {
+						dataRow[i] = Double.parseDouble("3");
+					} else {
+						System.out.println("dataRowStr[i] " + dataRowStr[i]);
+						dataRow[i] = Double.parseDouble(dataRowStr[i]);
 					}
-					theData.add(dataRow);
+				}
+				theData.add(dataRow);
 			} // end while
 			inr.close();
 			//
@@ -934,36 +936,80 @@ extends GPProblem {
 		return commands;
 	}
 
-	public static void constructFeatures(final IGPProgram ind, String fileName) {
-		Object[] noargs = new Object[0];
-		Double[][] testSet = readCSVFile(fileName);
-		for (int j = 0; j < testSet.length; j++) {
-			// set all the input variables
-			int variableIndex = 0;
-			for (int i = 0; i < testSet[0].length; i++) {
-				if (i != outputVariable) {
-					variables[variableIndex].set(testSet[i][j]);
-					variableIndex++;
+	public static double[][] convertInstancesToInputFeaturesArray(String fileName) {
+		// Create instances (file that contains the inputs to feed through the program)
+		double[][] inputFeatures;
+
+		try {
+			//load CSV
+			CSVLoader loaderInputs = new CSVLoader();
+			loaderInputs.setSource(new File(fileName));
+			Instances inputSet = loaderInputs.getDataSet();
+			inputSet.setClassIndex(inputSet.numAttributes()-1);
+
+			inputFeatures = new double[inputSet.numInstances()][inputSet.numAttributes()];
+
+			// Convert instances to double[][]
+			for (int i = 0; i < inputSet.numInstances(); i++) {
+				for (int j = 0; j < inputSet.numAttributes(); j++) {
+					inputFeatures[i][j] = inputSet.get(i).value(j);
 				}
 			}
 
-			try {
-				double result = ind.execute_double(0, noargs);
+			return inputFeatures;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-				// Write result to File?
-				System.out.println(result);
+		return null;
+	}
 
-				//				if (Double.isInfinite(error)) {
-				//					return Double.MAX_VALUE;
-				//				}
-			} catch (ArithmeticException ex) {
-				// This should not happen, some illegal operation was executed.
-				// ------------------------------------------------------------
-				System.out.println(ind);
-				throw ex;
+	public static void constructFeatures(IGPProgram ind, String inputFileName, String outputFileName) {
+		try {
+			Object[] noargs = new Object[0];
+			double[][] inputSet = convertInstancesToInputFeaturesArray(inputFileName);
+			PrintWriter featureWriter = new PrintWriter(outputFileName);
+
+			for (int j = 0; j < inputSet.length; j++) {
+				// set all the input variables
+				int variableIndex = 0;
+				for (int i = 0; i < inputSet[0].length; i++) {
+					if (i != outputVariable) {
+						variables[variableIndex].set(inputSet[j][i]);
+						variableIndex++;
+					}
+				}
+
+				try {
+					double result = ind.execute_double(0, noargs);
+					int classValue = (data[outputVariable][j]).intValue();
+
+
+					// Write results to File
+					// Write Header
+					if (j == 0) {
+						String featureName = "feature";
+						featureWriter.print(featureName + "-" + 1 + " ," + " class \n");
+					}
+					// Write contents
+					featureWriter.write(result + ", " + " class-" + classValue + "\n");
+					featureWriter.flush();
+
+					//				if (Double.isInfinite(error)) {
+					//					return Double.MAX_VALUE;
+					//				}
+				} catch (ArithmeticException ex) {
+					// This should not happen, some illegal operation was executed.
+					// ------------------------------------------------------------
+					System.out.println(ind);
+					throw ex;
+				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
+
 
 	/**
 	 * Starts the example.
@@ -1210,6 +1256,18 @@ extends GPProblem {
 		//		System.exit(0);
 	}
 
+	public static boolean range(double low, double high, double n) {
+	    return n >= low && n <= high;
+	}
+
+	public static void addToEntropy(HashMap<Integer, Integer> entropy, int classRange) {
+		if (entropy.get(classRange) == null) {
+			entropy.put(classRange, 1);
+		} else {
+			entropy.put(classRange, entropy.get(classRange) + 1);
+		}
+	}
+
 	/**
 	 * Fitness function for evaluating the produced formulas, represented as GP
 	 * programs. The fitness is computed by calculating the result (Y) of the
@@ -1226,7 +1284,9 @@ extends GPProblem {
 		public double computeRawFitness(final IGPProgram ind) {
 			double error = 0.0f;
 			Object[] noargs = new Object[0];
-			HashMap<Integer, Integer> entropy = new HashMap<Integer, Integer>();
+			// classes
+			int[] classes = new int[3];
+
 			// Evaluate function for the input numbers
 			// --------------------------------------------
 			// double[] results  =  new double[numRows];
@@ -1246,17 +1306,14 @@ extends GPProblem {
 				}
 				try {
 					double result = ind.execute_double(0, noargs);
-					// results[j] = result;
-
-					// Sum up the error between actual and expected result to get a defect
-					// rate.
-					// -------------------------------------------------------------------
-
 					int actualClass = (data[outputVariable][j]).intValue();
-					if (entropy.get(actualClass) == null) {
-						entropy.put(actualClass, 1);
+
+					if (range(Double.NEGATIVE_INFINITY, 0, result)) {
+						classes[0]++;
+					} else if (range(0, (Double.POSITIVE_INFINITY/2), result)) {
+						classes[1]++;
 					} else {
-						entropy.put(actualClass, entropy.get(actualClass) + 1);
+						classes[2]++;
 					}
 
 					//					error += Math.pow(result - data[outputVariable][j], 2);
@@ -1274,15 +1331,16 @@ extends GPProblem {
 					throw ex;
 				}
 			}
-
+			int total = 0;
 			// 3 classes
-			int total = entropy.get(1) + entropy.get(2) + entropy.get(3);
+			for (int i = 0; i < classes.length; i++) {
+				total += classes[i];
+			}
 			// Entropy
-			for (Entry<Integer, Integer> entry : entropy.entrySet())
-			{
-				// Entropy equation (We remove the negative because fitness can't be negative)
-				double probabilityClass = (entry.getValue()/total);
-				error += -(probabilityClass * Math.log(2) * probabilityClass);
+			for (int i = 0; i < classes.length; i++) {
+				// Entropy equation
+				double probabilityClass = (classes[i]/total);
+				error += (probabilityClass * Math.log(2) * probabilityClass);
 			}
 
 			// If the fitness is very close to 0.0 then we maybe bump it

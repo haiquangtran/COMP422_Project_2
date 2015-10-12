@@ -32,13 +32,13 @@ public class Question_6 {
 		String fileType = ".data";
 
 		// Determines the training data size (percentage of the split from whole dataset)
-		double trainingSetPercent = 0.8;	//80%
+		double trainingSetPercent = 0.5;	//50%
 		int kFoldNumber = 10;
 		int topFeatureNumber = 5;
 
 		// Create training set and test set csv files
-		DatasetFileCreater dataLoader = new DatasetFileCreater(wbcd + fileType, wbcd+"_training.csv", wbcd+"_test.csv", trainingSetPercent);
-		//		DatasetFileCreater dataLoader = new DatasetFileCreater(sonar + fileType, sonar+"_training.csv", sonar+"_test.csv", trainingSetPercent);
+		//		DatasetFileCreater dataLoader = new DatasetFileCreater(wbcd + fileType, wbcd+"_training.csv", wbcd+"_test.csv", trainingSetPercent);
+		DatasetFileCreater dataLoader = new DatasetFileCreater(sonar + fileType, sonar+"_training.csv", sonar+"_test.csv", trainingSetPercent);
 
 		// Load training set and test set csv files
 		String trainingSet = dataLoader.getTrainingSetFileName();

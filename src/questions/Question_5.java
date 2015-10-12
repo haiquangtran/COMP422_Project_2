@@ -41,33 +41,39 @@ public class Question_5 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		final String FILE_TYPE = ".data";
 		// Files
 		String wine = FileLoader.getFilePath("wine");
 		String balance = FileLoader.getFilePath("balance");
-		String fileType = ".data";
+		String outputTrainingFile = FileLoader.getFilePath("construct_features_training.csv");
+		String outputTestFile = FileLoader.getFilePath("construct_features_test.csv");
+
 		// Config files
 		String wineConfig = FileLoader.getFilePath("wine.conf");
 		String balanceConfig = FileLoader.getFilePath("balance.conf");
+
 		// Settings
 		int kFoldNumber = 10;
 		// Determines the training data size (percentage of the split from whole dataset)
-		double trainingSetPercent = 0.8; //100%
+		double trainingSetPercent = 0.5; //%
 
 		// Create training set and test set csv files
-		//		DatasetFileCreater dataLoader = new DatasetFileCreater(wine + fileType, wine+"_training.csv", wine+"_test.csv", trainingSetPercent);
-		DatasetFileCreater dataLoader = new DatasetFileCreater(balance + fileType, balance+"_training.csv", balance+"_test.csv", trainingSetPercent);
+//				DatasetFileCreater dataLoader = new DatasetFileCreater(wine + fileType, wine+"_training.csv", wine+"_test.csv", trainingSetPercent);
+		DatasetFileCreater dataLoader = new DatasetFileCreater(balance + FILE_TYPE, balance+"_training.csv", balance+"_test.csv", trainingSetPercent);
 
 		// Load training set and test set csv files
 		String trainingSet = dataLoader.getTrainingSetFileName();
 		String testSet = dataLoader.getTestSetFileName();
 
 		// Evaluate on naive and c4.5
-		//		evaluation(kFoldNumber, trainingSet, trainingSet);
+		//		evaluation(kFoldNumber, wholeDataset);
 
-		constructFeatures(balanceConfig, testSet);
+		constructFeatures(balanceConfig, outputTrainingFile, outputTestFile, trainingSet, testSet);
+//		constructFeatures(wineConfig, outputFile, wholeDataset);
+		evaluation(kFoldNumber, outputTrainingFile, outputTestFile);
 	}
 
-	private static void constructFeatures(String configFilePath, String testSetFileName) {
+	private static void constructFeatures(String configFilePath, String outputTrainingFileName, String outputTestFileName, String trainingSet, String testSet) {
 		try {
 			// Solve symbolic regression problem using Genetic Programming
 			GPConfiguration config = new GPConfiguration();
@@ -75,8 +81,13 @@ public class Question_5 {
 			String[] mainArgs = {configFilePath};
 
 			try {
-				IGPProgram best = constructFeatures.main(mainArgs);
-				constructFeatures.constructFeatures(best, testSetFileName);
+				// Find the best program
+				IGPProgram bestSolution = constructFeatures.main(mainArgs);
+				// Feed the training and test data to the program
+				constructFeatures.constructFeatures(bestSolution, trainingSet, outputTrainingFileName);
+				constructFeatures.constructFeatures(bestSolution, testSet, outputTestFileName);
+
+				// Evaluate how good the feature is
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -89,7 +100,9 @@ public class Question_5 {
 
 	private static void evaluation(int kFoldNumber, String trainingSet, String testSet) {
 		// Cross validation on the training set (no need for test set)
+		System.out.println("================ Naive Bayes ==============================");
 		NaiveBayesAlgorithm naive = new NaiveBayesAlgorithm(kFoldNumber, trainingSet, testSet);
+		System.out.println("================ C4.5 ==============================");
 		DecisionTreeC4_5 c4 = new DecisionTreeC4_5(kFoldNumber, trainingSet, testSet);
 	}
 }
