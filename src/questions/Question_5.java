@@ -58,8 +58,8 @@ public class Question_5 {
 		double trainingSetPercent = 0.5; //%
 
 		// Create training set and test set csv files
-//				DatasetFileCreater dataLoader = new DatasetFileCreater(wine + fileType, wine+"_training.csv", wine+"_test.csv", trainingSetPercent);
-		DatasetFileCreater dataLoader = new DatasetFileCreater(balance + FILE_TYPE, balance+"_training.csv", balance+"_test.csv", trainingSetPercent);
+		DatasetFileCreater dataLoader = new DatasetFileCreater(wine + FILE_TYPE, wine+"_training.csv", wine+"_test.csv", trainingSetPercent);
+//		DatasetFileCreater dataLoader = new DatasetFileCreater(balance + FILE_TYPE, balance+"_training.csv", balance+"_test.csv", trainingSetPercent);
 
 		// Load training set and test set csv files
 		String trainingSet = dataLoader.getTrainingSetFileName();
@@ -68,8 +68,8 @@ public class Question_5 {
 		// Evaluate on naive and c4.5
 		//		evaluation(kFoldNumber, wholeDataset);
 
-		constructFeatures(balanceConfig, outputTrainingFile, outputTestFile, trainingSet, testSet);
-//		constructFeatures(wineConfig, outputFile, wholeDataset);
+//		constructFeatures(balanceConfig, outputTrainingFile, outputTestFile, trainingSet, testSet);
+		constructFeatures(wineConfig, outputTrainingFile, outputTestFile, trainingSet, testSet);
 		evaluation(kFoldNumber, outputTrainingFile, outputTestFile);
 	}
 
