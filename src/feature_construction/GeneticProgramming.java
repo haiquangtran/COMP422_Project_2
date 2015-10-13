@@ -982,7 +982,7 @@ extends GPProblem {
 
 				try {
 					double result = ind.execute_double(0, noargs);
-					int classValue = (data[outputVariable][j]).intValue();
+					int classIndexValue = (int) (inputSet[j][outputVariable]);
 
 
 					// Write results to File
@@ -992,12 +992,9 @@ extends GPProblem {
 						featureWriter.print(featureName + "-" + 1 + " ," + " class \n");
 					}
 					// Write contents
-					featureWriter.write(result + ", " + " class-" + classValue + "\n");
+					featureWriter.write(result + ", " + " class-" + classIndexValue + "\n");
 					featureWriter.flush();
 
-					//				if (Double.isInfinite(error)) {
-					//					return Double.MAX_VALUE;
-					//				}
 				} catch (ArithmeticException ex) {
 					// This should not happen, some illegal operation was executed.
 					// ------------------------------------------------------------
@@ -1257,7 +1254,7 @@ extends GPProblem {
 	}
 
 	public static boolean range(double low, double high, double n) {
-	    return n >= low && n <= high;
+		return n >= low && n <= high;
 	}
 
 	public static void addToEntropy(HashMap<Integer, Integer> entropy, int classRange) {
@@ -1285,7 +1282,11 @@ extends GPProblem {
 			double error = 0.0f;
 			Object[] noargs = new Object[0];
 			// classes
-			int[] classes = new int[3];
+			EntropyClass[] classes = new EntropyClass[3];
+			// Initialise all the classes
+			for (int i = 0; i < classes.length; i++) {
+				classes[i] = new EntropyClass();
+			}
 
 			// Evaluate function for the input numbers
 			// --------------------------------------------
@@ -1304,19 +1305,28 @@ extends GPProblem {
 						variableIndex++;
 					}
 				}
+
 				try {
 					double result = ind.execute_double(0, noargs);
-					int actualClass = (data[outputVariable][j]).intValue();
+					int actualClassIndex = (data[outputVariable][j]).intValue()-1;
 
-					if (range(Double.NEGATIVE_INFINITY, 0, result)) {
-						classes[0]++;
-					} else if (range(0, (Double.POSITIVE_INFINITY/2), result)) {
-						classes[1]++;
-					} else {
-						classes[2]++;
+					// Bound intervals
+					double max = 10000;
+					if (result > max || result < -max || Double.isNaN(result)){
+						return max;
 					}
 
-					//					error += Math.pow(result - data[outputVariable][j], 2);
+					// Within Interval Ranges
+					if (range(-max/2, 0, result)) {
+						classes[0].addToFrequency();
+					} else if (range(0, max/2, result)) {
+						classes[1].addToFrequency();
+					} else {
+						classes[2].addToFrequency();
+					}
+
+					// Total frequency
+					classes[actualClassIndex].addToNumberOfTotalClasses();
 
 					// If the error is too high, stop evaluation and return worst error
 					// possible.
@@ -1331,17 +1341,13 @@ extends GPProblem {
 					throw ex;
 				}
 			}
-			int total = 0;
-			// 3 classes
+
+			error = 0.0;
+			// Calculate Shannons Entropy
 			for (int i = 0; i < classes.length; i++) {
-				total += classes[i];
+				error += classes[i].calculateEntropy(i);
 			}
-			// Entropy
-			for (int i = 0; i < classes.length; i++) {
-				// Entropy equation
-				double probabilityClass = (classes[i]/total);
-				error += (probabilityClass * Math.log(2) * probabilityClass);
-			}
+			error = Math.abs(error);
 
 			// If the fitness is very close to 0.0 then we maybe bump it
 			// up to see alternative solutions.
