@@ -36,7 +36,7 @@ public class MainClass {
 	private static void printInstructions() {
 		System.out.println("Enter q[question number] and [option] according to the below available options:");
 		System.out.println("Question 1 = q1");
-		System.out.println("Question 2 = q2 [digits--]");
+		System.out.println("Question 2 = q2 [digits00 || digits05 || digits10 || digits15 || digits20 || digits30 || digits40 || digits50 || digits60]");
 		System.out.println("Question 3 = q3");
 		System.out.println("Question 4 = q4 [rosenbrock || griewank]");
 		System.out.println("Question 5 = q5 [wine || balance]");
