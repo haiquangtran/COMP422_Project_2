@@ -28,7 +28,7 @@ public class Question_1 {
 	 *
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public Question_1() {
 		try {
 			GPConfiguration xorConfig = new GPConfiguration();
 			SymbolicRegression xorProblem = new SymbolicRegression(xorConfig);

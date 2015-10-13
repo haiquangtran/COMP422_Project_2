@@ -35,7 +35,7 @@ public class Question_4 {
 	 *
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public Question_4(String functionName) {
 		// Fitness functions
 		Problem rosenbrock = new RosenbrockFitnessFunction();
 		Problem griewank = new GriewankFitnessFunction();
@@ -54,7 +54,17 @@ public class Question_4 {
 
 		Swarm s = new Swarm();
 
-		s.setProblem(rosenbrock);
+		if (functionName.equalsIgnoreCase("rosenbrock")) {
+			System.out.println("Running PSO optimizing rosenbrock's function");
+			s.setProblem(rosenbrock);
+		} else if (functionName.equalsIgnoreCase("griewank")) {
+			System.out.println("Running PSO optimizing griewank's function");
+			s.setProblem(griewank);
+		} else {
+			System.out.println("q4: Invalid function name. args[2] should be rosenbrock or griewank.");
+			return;
+		}
+
 		s.setTopology(new StarTopology());
 		// s.setTopology(new RingTopology(4));
 

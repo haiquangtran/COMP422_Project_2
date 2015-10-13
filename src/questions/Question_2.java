@@ -34,8 +34,16 @@ public class Question_2 {
 	 *
 	 * • Compare the two methods and results and draw your conclusions.
 	 */
-	public static void main(String[] args) {
-		String filePath = FileLoader.getFilePath("digits60");
+	public Question_2(String fileName) {
+		if (!(fileName.equalsIgnoreCase("digits00") || fileName.equalsIgnoreCase("digits05") ||
+				fileName.equalsIgnoreCase("digits10") || fileName.equalsIgnoreCase("digits15") ||
+				fileName.equalsIgnoreCase("digits20") || fileName.equalsIgnoreCase("digits30") ||
+				fileName.equalsIgnoreCase("digits40") || fileName.equalsIgnoreCase("digits50") || fileName.equalsIgnoreCase("digits60"))) {
+			System.out.println("q2: Invalid filename. args[2] should be one of the following:");
+			System.out.println("digits00\ndigits05\ndigits10\ndigits15\ndigits20\ndigits30\ndigits40\ndigits50\ndigits60");
+		}
+
+		String filePath = FileLoader.getFilePath(fileName);
 
 		// Load datasets
 		DatasetLoader dataLoader = new DatasetLoader(filePath);
@@ -47,7 +55,7 @@ public class Question_2 {
 		knn.calculate();
 	}
 
-	private static void printAverageResults(KNN_Algorithm knn, int runs) {
+	private void printAverageResults(KNN_Algorithm knn, int runs) {
 		double totalAccuracy = 0;
 		double mean = 0;
 

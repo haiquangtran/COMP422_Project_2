@@ -26,9 +26,7 @@ public class Question_6 {
 	 *
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		String wbcd = FileLoader.getFilePath("wbcd");
-		String sonar = FileLoader.getFilePath("sonar");
+	public Question_6(String dataset) {
 		String fileType = ".data";
 
 		// Determines the training data size (percentage of the split from whole dataset)
@@ -36,9 +34,13 @@ public class Question_6 {
 		int kFoldNumber = 10;
 		int topFeatureNumber = 5;
 
+		if (! (dataset.equalsIgnoreCase("wbcd") || dataset.equalsIgnoreCase("sonar"))) {
+			System.out.println("q6: Invalid argument for name. args[2] should be wbcd or sonar.");
+			return;
+		}
+
 		// Create training set and test set csv files
-		//		DatasetFileCreater dataLoader = new DatasetFileCreater(wbcd + fileType, wbcd+"_training.csv", wbcd+"_test.csv", trainingSetPercent);
-		DatasetFileCreater dataLoader = new DatasetFileCreater(sonar + fileType, sonar+"_training.csv", sonar+"_test.csv", trainingSetPercent);
+		DatasetFileCreater dataLoader = new DatasetFileCreater(FileLoader.getFilePath(dataset) + fileType, FileLoader.getFilePath(dataset)+"_training.csv", FileLoader.getFilePath(dataset)+"_test.csv", trainingSetPercent);
 
 		// Load training set and test set csv files
 		String trainingSet = dataLoader.getTrainingSetFileName();

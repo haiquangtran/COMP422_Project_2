@@ -20,7 +20,7 @@ public class Question_3 {
 	 *
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public Question_3() {
 		try {
 			int min = -500;
 			int max = 500;
