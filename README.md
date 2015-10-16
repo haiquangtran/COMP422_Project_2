@@ -1,5 +1,5 @@
 # COMP422_project_2
-COMP422 (Data mining) - Project 2
+Project 2 for COMP422, a Datamining Course. This project includes: Genetic Programming vs Neural Networks/KNN, Naive Bayes/C4.5 Decision Trees, Particle Swarm Optimization (PSO), and Feature Selection & Feature Construction.
 
 #Requirements
 - JGAP library version 3.6.3 (jgap.jar, jgap-examples.jar, log4j.jar)
