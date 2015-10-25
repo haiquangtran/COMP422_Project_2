@@ -1,9 +1,9 @@
-# COMP422_project_2
+# COMP422 Project 2
 Project 2 for COMP422, a Data Mining course. The project includes: Genetic Programming vs Neural Networks/KNN, Naive Bayes/C4.5 Decision Trees, Particle Swarm Optimization (PSO), Feature Selection, and Feature Construction.
 
 #Requirements
-- JGAP library version 3.6.3 (jgap.jar, jgap-examples.jar, log4j.jar)
-- Weka
+- full JGAP library version 3.6.3 (jgap.jar, jgap-examples.jar, log4j.jar etc)
+- Weka (need to also include ChiSquared jar which is found separately)
 
 # Run commands for executable jar
 - Must move assets folder to current directory of the executable jar
